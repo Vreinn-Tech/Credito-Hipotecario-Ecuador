@@ -5,6 +5,21 @@
 import { createServer } from 'node:http';
 import { crearManejadorHttp } from './http.js';
 
+/** Tope de lectura del cuerpo; el manejador HTTP aplica después su propio límite (maxBytes). */
+const MAX_CUERPO = 1024 * 1024;
+
+/** Lee el cuerpo completo en memoria (compatible con Node 18, que no tiene ReadableStream.from). */
+async function leerCuerpo(req) {
+  const trozos = [];
+  let total = 0;
+  for await (const trozo of req) {
+    total += trozo.length;
+    if (total > MAX_CUERPO) break;
+    trozos.push(trozo);
+  }
+  return Buffer.concat(trozos);
+}
+
 /**
  * Convierte un manejador (Request) => Response en un listener de node:http.
  * @param {(request: Request) => Promise<Response>} manejador
@@ -18,7 +33,7 @@ export function aListenerNode(manejador) {
       const request = new Request(`http://${req.headers.host ?? 'localhost'}${req.url}`, {
         method: req.method,
         headers: cabeceras,
-        ...(conCuerpo ? { body: ReadableStream.from(req), duplex: 'half' } : {}),
+        ...(conCuerpo ? { body: await leerCuerpo(req) } : {}),
       });
       const response = await manejador(request);
       res.writeHead(response.status, Object.fromEntries(response.headers));
