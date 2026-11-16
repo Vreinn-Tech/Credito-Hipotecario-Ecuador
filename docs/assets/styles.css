@@ -397,3 +397,6 @@ pre .k { color: #8fe0bd; } pre .s { color: #f6c76a; } pre .n { color: #ffb08a; }
 .pie-marca p { margin: 14px 0 0; color: var(--ink-2); max-width: 44ch; }
 .pie-legal p { color: var(--muted); max-width: 90ch; margin-bottom: .6em; }
 .sin-fecha { color: var(--muted); }
+
+/* Enlace para quien busca un crédito y no el código (la intención de consumidor vive en el sitio). */
+.hero-consumo { margin: 14px 0 0; font-size: .95rem; color: var(--muted, inherit); }

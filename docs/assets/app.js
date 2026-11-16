@@ -4,7 +4,6 @@ import { evaluarTodos, normalizarPerfil } from './evaluacion.js';
 import { fmtUSD, fmtPct } from './finanzas.js';
 
 const SITIO = 'https://creditohipotecarioecuador.com';
-const UTM = '?utm_source=github&utm_medium=pages&utm_campaign=open-source';
 const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 const esIso = (v) => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}/.test(v);
 const fecha = (iso) => {
@@ -76,7 +75,7 @@ async function iniciarDemo() {
             no ? null : h('span', { class: 'res-n', 'aria-label': `Posición ${n}`, text: n }),
             h('div', {},
               h('p', { class: 'res-ent', text: nombreEntidad.get(p.entidad) ?? p.entidad }),
-              h('h4', { class: 'res-nom' }, h('a', { href: `${SITIO}/programas/${p.slug}/${UTM}`, text: p.nombre })),
+              h('h4', { class: 'res-nom' }, h('a', { href: `${SITIO}/programas/${p.slug}/`, text: p.nombre })),
             ),
           ),
           h('span', { class: `badge badge-${r.elegibilidad}`, text: ESTADO[r.elegibilidad] }),

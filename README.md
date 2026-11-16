@@ -1,28 +1,32 @@
-# Crédito Hipotecario Ecuador
+# Crédito Hipotecario Ecuador: código y datos abiertos
 
-Evaluador de elegibilidad, simulador de cuotas y **datos abiertos** de crédito de vivienda en Ecuador: BIESS, programas VIS/VIP, bancos, cooperativas y mutualistas.
+Librería de JavaScript, herramienta de línea de comandos (CLI), servidor MCP y **datos abiertos** en JSON sobre el crédito de vivienda en Ecuador: BIESS, programas VIS/VIP, bancos, cooperativas y mutualistas. Sin dependencias.
 
-Es el mismo motor que usa [creditohipotecarioecuador.com](https://creditohipotecarioecuador.com), publicado como librería de JavaScript, herramienta de línea de comandos y servidor MCP para asistentes de IA. No tiene dependencias.
+Es el código fuente del motor de elegibilidad de [creditohipotecarioecuador.com](https://creditohipotecarioecuador.com), el comparador de crédito hipotecario de Ecuador. Este repositorio es para desarrolladores, analistas y asistentes de IA; si lo que buscas es un crédito, ve a [¿Buscas un crédito y no el código?](#buscas-un-crédito-y-no-el-código)
 
+- **Datos abiertos (CC BY 4.0)**: 28 productos y 39 instituciones, con fuente y fecha por registro: [`programas.json`](data/programas.json), [`entidades.json`](data/entidades.json) y [diccionario de datos](data/README.md)
+- **Servidor MCP**: `https://creditohipotecarioecuador.com/mcp` ([referencia](docs/mcp.md))
+- **Documentación y demo técnica**: <https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/>
 - **Sitio**: <https://creditohipotecarioecuador.com>
-- **Página del proyecto**: <https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/>
-- **Datos**: 28 productos y 39 instituciones, con fuente y fecha por registro ([diccionario de datos](data/README.md))
 
 > **Aviso.** Información referencial: no es una oferta de crédito ni asesoría financiera. Las tasas cambian. Ver el [aviso legal](#aviso-legal).
 
-## Qué responde
+## Qué calcula el motor
 
-Con el precio de la vivienda, tus ingresos y unos pocos datos más, indica para cada producto:
+A partir de un perfil (precio de la vivienda, ingresos y unos pocos datos más), devuelve para cada producto:
 
-- si calificas (**apto**), si calificas con algún ajuste (**condicional**) o si no calificas (**no apto**), y por qué;
-- cuánto te financiaría, la cuota mensual estimada, el plazo y la entrada mínima;
+- la elegibilidad: **apto**, **condicional** (con algún ajuste) o **no apto**, con las razones;
+- el monto financiable, la cuota mensual estimada, el plazo y la entrada mínima;
 - un puntaje de 0 a 100 para ordenar las opciones.
 
-¿Prefieres hacerlo en el navegador? Usa las herramientas del sitio:
+## ¿Buscas un crédito y no el código?
 
-- [Evaluación de perfil](https://creditohipotecarioecuador.com/evaluacion/): a qué créditos calificas, con asesoría gratuita.
-- [Comparador](https://creditohipotecarioecuador.com/comparador/): tasas, plazos y financiamiento lado a lado.
-- [Simulador](https://creditohipotecarioecuador.com/simulador/): cuota y tabla de amortización.
+No necesitas instalar nada. Las herramientas para el público están en el sitio, son gratuitas y usan estos mismos datos:
+
+- [¿A qué crédito de vivienda calificas?](https://creditohipotecarioecuador.com/evaluacion/): evaluación de perfil en 2 minutos, con asesoría gratuita.
+- [Comparador de créditos hipotecarios](https://creditohipotecarioecuador.com/comparador/): tasas, plazos y financiamiento lado a lado.
+- [Simulador de crédito hipotecario](https://creditohipotecarioecuador.com/simulador/): cuota mensual y tabla de amortización.
+- [Fichas de cada programa](https://creditohipotecarioecuador.com/programas/): requisitos, ventajas, desventajas y fuente oficial de cada producto.
 
 ## Inicio rápido
 
@@ -313,6 +317,8 @@ o solo el servidor MCP:
 
 En claude.ai y Claude Desktop, añade `https://creditohipotecarioecuador.com/mcp` como conector personalizado (Customize > Connectors). Pasos, skill para subir y servidor local en [`docs/claude.md`](docs/claude.md). Para ChatGPT, ver [`docs/mcp.md`](docs/mcp.md).
 
+¿No programas? La [guía para conectar Claude o ChatGPT](https://creditohipotecarioecuador.com/asistentes-ia/) lo explica menú por menú.
+
 ## Desarrollo
 
 ```bash
@@ -341,10 +347,13 @@ npm run tablas      # regenera las tablas de la documentación tras cambiar los 
 ## Enlaces
 
 - [creditohipotecarioecuador.com](https://creditohipotecarioecuador.com): comparador de crédito de vivienda en Ecuador
-- [Evaluación de perfil](https://creditohipotecarioecuador.com/evaluacion/)
-- [Comparador de créditos](https://creditohipotecarioecuador.com/comparador/)
-- [Simulador de cuotas](https://creditohipotecarioecuador.com/simulador/)
-- [Página del proyecto](https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/)
+- [Evaluación de perfil gratuita](https://creditohipotecarioecuador.com/evaluacion/)
+- [Comparar tasas de crédito hipotecario](https://creditohipotecarioecuador.com/comparador/)
+- [Calcular la cuota de un crédito de vivienda](https://creditohipotecarioecuador.com/simulador/)
+- [Mejor crédito hipotecario de Ecuador por perfil](https://creditohipotecarioecuador.com/mejor-credito-hipotecario-ecuador/)
+- [Préstamo hipotecario BIESS: requisitos y tasas](https://creditohipotecarioecuador.com/biess/)
+- [Usar los datos en Claude o ChatGPT](https://creditohipotecarioecuador.com/asistentes-ia/)
+- [Documentación y demo técnica](https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/)
 
 ## In English
 

@@ -7,6 +7,8 @@ simulan cuotas y consultan tasas, requisitos y entidades (BIESS, Miti-Miti VIS/V
 - **Servidor público:** `https://creditohipotecarioecuador.com/mcp` — Streamable HTTP, sin registro ni clave, solo lectura.
 - **Local:** `npx -y github:Vreinn-Tech/Credito-Hipotecario-Ecuador credito-hipotecario-ecuador-mcp` (stdio).
 - **Sin dependencias:** el protocolo está implementado a mano sobre el mismo evaluador y los mismos datos del paquete.
+- **Metadatos para registros MCP:** [`server.json`](../server.json) describe el servidor remoto en el formato del [registro oficial de MCP](https://registry.modelcontextprotocol.io) (nombre `io.github.Vreinn-Tech/credito-hipotecario-ecuador`).
+- **¿No programas?** Guía para el público, menú por menú: <https://creditohipotecarioecuador.com/asistentes-ia/>
 
 > **Aviso.** Los datos son referenciales y cada uno lleva su fecha (`fechaDato`) y su fuente oficial (`fuenteUrl`). No es una
 > oferta de crédito ni asesoría financiera: las tasas y requisitos cambian, y cada entidad hace su propio análisis. Verifica

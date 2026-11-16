@@ -1,7 +1,7 @@
 {
   "name": "credito-hipotecario-ecuador",
   "version": "0.1.0",
-  "description": "Evaluador de elegibilidad, simulador de cuotas y datos abiertos de crédito hipotecario en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas). Librería, CLI y servidor MCP sin dependencias.",
+  "description": "Librería, CLI y servidor MCP sin dependencias, con datos abiertos de crédito de vivienda en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas): motor de elegibilidad y cálculo de cuotas.",
   "keywords": [
     "ecuador",
     "credito-hipotecario",
@@ -13,6 +13,8 @@
     "simulador",
     "amortizacion",
     "datos-abiertos",
+    "open-data",
+    "model-context-protocol",
     "mortgage",
     "mcp"
   ],
@@ -59,7 +61,8 @@
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
-    "LICENSE-DATA.md"
+    "LICENSE-DATA.md",
+    "server.json"
   ],
   "scripts": {
     "test": "node --test",

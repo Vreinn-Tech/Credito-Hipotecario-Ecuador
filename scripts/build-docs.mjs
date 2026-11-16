@@ -19,6 +19,8 @@ import { fileURLToPath } from 'node:url';
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..');
 const assets = join(raiz, 'docs', 'assets');
 const SITIO = 'https://creditohipotecarioecuador.com';
+const REPO = 'https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador';
+const RAW = 'https://raw.githubusercontent.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/main';
 
 await mkdir(assets, { recursive: true });
 
@@ -79,7 +81,8 @@ const desgloseEntidades = [
 
 const bloques = {};
 
-bloques.lead = `El motor de elegibilidad y la base de datos de ${programas.length} productos de vivienda y ${entidades.length} entidades (BIESS, VIS/VIP, bancos, cooperativas y mutualistas) que usa <a href="${SITIO}/">creditohipotecarioecuador.com</a>, publicados como código abierto y con servidor MCP para Claude y ChatGPT.`;
+// Intención de desarrollador (código, datos, MCP). La intención de consumidor se cede al sitio con enlaces contextuales.
+bloques.lead = `Código abierto del motor de elegibilidad y datos abiertos de ${programas.length} productos y ${entidades.length} entidades (BIESS, VIS/VIP, bancos, cooperativas y mutualistas): librería de JavaScript, CLI, JSON y servidor MCP. Es la base técnica de <a href="${SITIO}/">creditohipotecarioecuador.com</a>, el comparador de crédito hipotecario de Ecuador.`;
 
 bloques.stats = `
           <div class="stat"><dt>productos</dt><dd>${programas.length}</dd><p>${creditos.length} créditos y ${plural(bonos, 'bono', 'bonos')} del Estado</p></div>
@@ -127,15 +130,16 @@ ${JSON.stringify({
       '@type': 'Organization',
       '@id': `${SITIO}/#organizacion`,
       name: 'Crédito Hipotecario Ecuador',
-      url: `${SITIO}/`,
+      url: SITIO,
+      sameAs: [REPO],
     },
     {
       '@type': 'SoftwareSourceCode',
       '@id': 'https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/#codigo',
       name: 'credito-hipotecario-ecuador',
-      description: 'Evaluador de elegibilidad para crédito hipotecario en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas) con CLI y servidor MCP.',
+      description: 'Librería de JavaScript sin dependencias, CLI y servidor MCP con el motor de elegibilidad y el cálculo de cuotas de crédito de vivienda en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas).',
       url: 'https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/',
-      codeRepository: 'https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador',
+      codeRepository: REPO,
       programmingLanguage: 'JavaScript',
       runtimePlatform: 'Node.js, navegadores',
       license: 'https://opensource.org/licenses/MIT',
@@ -155,13 +159,16 @@ ${JSON.stringify({
       spatialCoverage: { '@type': 'Country', name: 'Ecuador' },
       dateModified: ultimaFecha,
       isAccessibleForFree: true,
-      keywords: ['crédito hipotecario', 'Ecuador', 'BIESS', 'VIS', 'VIP', 'tasas de interés', 'vivienda'],
+      keywords: ['datos abiertos', 'crédito hipotecario', 'Ecuador', 'BIESS', 'VIS', 'VIP', 'tasas de interés', 'vivienda'],
+      variableMeasured: ['tasa nominal anual', 'tasa efectiva anual', 'plazo máximo', 'financiamiento máximo', 'monto máximo', 'requisitos', 'fecha del dato', 'fuente oficial'],
+      creditText: 'Fuente: creditohipotecarioecuador.com',
+      sameAs: `${REPO}/tree/main/data`,
       isBasedOn: `${SITIO}/`,
       creator: { '@id': `${SITIO}/#organizacion` },
       publisher: { '@id': `${SITIO}/#organizacion` },
       distribution: [
-        { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/programas.json' },
-        { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: 'https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/entidades.json' },
+        { '@type': 'DataDownload', name: 'programas.json', encodingFormat: 'application/json', contentUrl: `${RAW}/data/programas.json` },
+        { '@type': 'DataDownload', name: 'entidades.json', encodingFormat: 'application/json', contentUrl: `${RAW}/data/entidades.json` },
       ],
     },
   ],

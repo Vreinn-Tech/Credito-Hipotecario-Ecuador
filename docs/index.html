@@ -3,25 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Evaluador de crédito hipotecario Ecuador · open source, datos y MCP</title>
-<meta name="description" content="Motor de elegibilidad y base de datos abierta de crédito de vivienda en Ecuador: BIESS, VIS/VIP, bancos, cooperativas y mutualistas. Demo en vivo, CLI, librería y servidor MCP para Claude y ChatGPT.">
+<title>Datos abiertos, librería y servidor MCP de crédito de vivienda en Ecuador</title>
+<meta name="description" content="Proyecto de código abierto (MIT) con datos abiertos (CC BY 4.0) sobre crédito de vivienda en Ecuador: motor de elegibilidad en JavaScript, CLI, JSON de productos y entidades, y servidor MCP.">
 <link rel="canonical" href="https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0f6b4f">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_EC">
-<meta property="og:site_name" content="Crédito Hipotecario Ecuador · open source">
-<meta property="og:title" content="Evaluador de crédito hipotecario Ecuador, open source">
-<meta property="og:description" content="El motor de elegibilidad y los datos de BIESS, VIS/VIP, bancos, cooperativas y mutualistas, abiertos. Con CLI, librería y servidor MCP para Claude y ChatGPT.">
+<meta property="og:site_name" content="Crédito Hipotecario Ecuador · código abierto">
+<meta property="og:title" content="Crédito de vivienda en Ecuador: código abierto, datos abiertos y servidor MCP">
+<meta property="og:description" content="Para desarrolladores: motor de elegibilidad en JavaScript (MIT), datos en JSON (CC BY 4.0), CLI y servidor MCP. Un proyecto de creditohipotecarioecuador.com.">
 <meta property="og:url" content="https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/">
 <meta property="og:image" content="https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Crédito Hipotecario Ecuador: evaluador de elegibilidad y datos abiertos de crédito de vivienda">
+<meta property="og:image:alt" content="Crédito Hipotecario Ecuador: código y datos abiertos de crédito de vivienda">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Evaluador de crédito hipotecario Ecuador, open source">
-<meta name="twitter:description" content="Motor de elegibilidad y datos abiertos de crédito de vivienda en Ecuador, con servidor MCP para Claude y ChatGPT.">
+<meta name="twitter:title" content="Crédito de vivienda en Ecuador: código abierto, datos abiertos y servidor MCP">
+<meta name="twitter:description" content="Motor de elegibilidad en JavaScript, datos en JSON, CLI y servidor MCP. Código MIT, datos CC BY 4.0.">
 <meta name="twitter:image" content="https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/og.png">
 <link rel="stylesheet" href="assets/styles.css">
 <!-- Los bloques "build:…" de esta página los regenera scripts/build-docs.mjs a partir de data/*.json. No edites su contenido a mano. -->
@@ -34,13 +34,16 @@
    "@type": "Organization",
    "@id": "https://creditohipotecarioecuador.com/#organizacion",
    "name": "Crédito Hipotecario Ecuador",
-   "url": "https://creditohipotecarioecuador.com/"
+   "url": "https://creditohipotecarioecuador.com",
+   "sameAs": [
+    "https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador"
+   ]
   },
   {
    "@type": "SoftwareSourceCode",
    "@id": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/#codigo",
    "name": "credito-hipotecario-ecuador",
-   "description": "Evaluador de elegibilidad para crédito hipotecario en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas) con CLI y servidor MCP.",
+   "description": "Librería de JavaScript sin dependencias, CLI y servidor MCP con el motor de elegibilidad y el cálculo de cuotas de crédito de vivienda en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas).",
    "url": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/",
    "codeRepository": "https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador",
    "programmingLanguage": "JavaScript",
@@ -70,6 +73,7 @@
    "dateModified": "2026-11-16",
    "isAccessibleForFree": true,
    "keywords": [
+    "datos abiertos",
     "crédito hipotecario",
     "Ecuador",
     "BIESS",
@@ -78,6 +82,18 @@
     "tasas de interés",
     "vivienda"
    ],
+   "variableMeasured": [
+    "tasa nominal anual",
+    "tasa efectiva anual",
+    "plazo máximo",
+    "financiamiento máximo",
+    "monto máximo",
+    "requisitos",
+    "fecha del dato",
+    "fuente oficial"
+   ],
+   "creditText": "Fuente: creditohipotecarioecuador.com",
+   "sameAs": "https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/tree/main/data",
    "isBasedOn": "https://creditohipotecarioecuador.com/",
    "creator": {
     "@id": "https://creditohipotecarioecuador.com/#organizacion"
@@ -88,13 +104,15 @@
    "distribution": [
     {
      "@type": "DataDownload",
+     "name": "programas.json",
      "encodingFormat": "application/json",
-     "contentUrl": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/programas.json"
+     "contentUrl": "https://raw.githubusercontent.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/main/data/programas.json"
     },
     {
      "@type": "DataDownload",
+     "name": "entidades.json",
      "encodingFormat": "application/json",
-     "contentUrl": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/entidades.json"
+     "contentUrl": "https://raw.githubusercontent.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/main/data/entidades.json"
     }
    ]
   }
@@ -108,16 +126,16 @@
 
 <header class="hdr">
   <div class="wrap hdr-in">
-    <a class="marca" href="https://creditohipotecarioecuador.com/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source" aria-label="Crédito Hipotecario Ecuador, ir al sitio">
+    <a class="marca" href="https://creditohipotecarioecuador.com/" aria-label="Crédito Hipotecario Ecuador, ir al sitio">
       <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#0f6b4f"/><path d="M20 9 8 19.5h3.6V31h6.6v-7h3.6v7h6.6V19.5H32z" fill="#fff"/><circle cx="30.5" cy="10.5" r="4.5" fill="#f6b73c"/></svg>
       <span class="marca-txt">Crédito Hipotecario<b>Ecuador</b></span>
     </a>
-    <span class="chip-os">open source</span>
+    <span class="chip-os">código abierto</span>
     <nav class="nav" aria-label="Secciones">
       <a href="#demo">Demo</a>
       <a href="#motor">Motor</a>
       <a href="#datos">Datos</a>
-      <a href="#mcp">Claude / ChatGPT</a>
+      <a href="#mcp">Servidor MCP</a>
       <a href="#desarrolladores">Desarrolladores</a>
     </nav>
     <a class="btn btn-ghost btn-sm hdr-gh" href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador">
@@ -134,13 +152,14 @@
   <div class="wrap hero-in">
     <div class="hero-txt">
       <p class="eyebrow">Código MIT · Datos CC BY 4.0</p>
-      <h1>El evaluador de crédito hipotecario de Ecuador, <span class="h1-acento">abierto</span>.</h1>
-      <p class="lead"><!-- build:lead -->El motor de elegibilidad y la base de datos de 28 productos de vivienda y 39 entidades (BIESS, VIS/VIP, bancos, cooperativas y mutualistas) que usa <a href="https://creditohipotecarioecuador.com/">creditohipotecarioecuador.com</a>, publicados como código abierto y con servidor MCP para Claude y ChatGPT.<!-- /build:lead --></p>
+      <h1>Crédito de vivienda en Ecuador: el motor y los datos, <span class="h1-acento">abiertos</span>.</h1>
+      <p class="lead"><!-- build:lead -->Código abierto del motor de elegibilidad y datos abiertos de 28 productos y 39 entidades (BIESS, VIS/VIP, bancos, cooperativas y mutualistas): librería de JavaScript, CLI, JSON y servidor MCP. Es la base técnica de <a href="https://creditohipotecarioecuador.com/">creditohipotecarioecuador.com</a>, el comparador de crédito hipotecario de Ecuador.<!-- /build:lead --></p>
       <div class="cta">
-        <a class="btn btn-lg" href="https://creditohipotecarioecuador.com/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source">Evalúa tu perfil en creditohipotecarioecuador.com <span aria-hidden="true">→</span></a>
-        <a class="btn btn-ghost" href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador">Ver el código en GitHub</a>
-        <a class="btn btn-ghost" href="#mcp">Usar con Claude / ChatGPT</a>
+        <a class="btn btn-lg" href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador">Ver el código en GitHub</a>
+        <a class="btn btn-ghost" href="#datos">Descargar los datos (JSON)</a>
+        <a class="btn btn-ghost" href="#mcp">Conectar el servidor MCP</a>
       </div>
+      <p class="hero-consumo">¿Buscas un crédito y no el código? Haz la <a href="https://creditohipotecarioecuador.com/evaluacion/">evaluación gratuita de tu perfil</a> en el sitio.</p>
     </div>
     <div class="hero-datos" aria-label="La base de datos en cifras">
       <p class="hero-datos-t">La base de datos, en cifras</p>
@@ -159,17 +178,18 @@
 <section class="sec" id="demo" aria-labelledby="demo-t">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Demo en vivo</p>
-      <h2 id="demo-t">Prueba el motor con tu perfil</h2>
-      <p class="lead">El mismo código del repositorio se ejecuta aquí, en tu navegador, sobre los datos reales. Nada de lo que escribes sale de esta página.</p>
+      <p class="eyebrow">Demo técnica</p>
+      <h2 id="demo-t">El motor, ejecutándose en tu navegador</h2>
+      <p class="lead">El mismo código del repositorio se ejecuta aquí sobre los datos reales; nada de lo que escribes sale de esta página. Es una demostración de la librería: para decidir tu crédito, usa la <a href="https://creditohipotecarioecuador.com/evaluacion/">evaluación completa con asesoría gratuita</a> del sitio.</p>
     </div>
 
     <div class="aviso-nojs" id="demo-fallback">
       <p><strong>La demo necesita JavaScript.</strong> Si no puedes activarlo, haz la evaluación completa y gratuita en
-      <a href="https://creditohipotecarioecuador.com/evaluacion/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source">creditohipotecarioecuador.com/evaluacion</a>.</p>
+      <a href="https://creditohipotecarioecuador.com/evaluacion/">creditohipotecarioecuador.com/evaluacion</a>.</p>
     </div>
 
-    <div class="demo" id="demo-app" hidden>
+    <!-- data-nosnippet: los resultados de ejemplo de la demo no deben salir como fragmento en Google; la intención "¿a qué crédito califico?" es de /evaluacion/. -->
+    <div class="demo" id="demo-app" data-nosnippet hidden>
       <form class="card demo-form" id="demo-form" novalidate>
         <h3>Tu perfil</h3>
         <div class="campos">
@@ -227,7 +247,7 @@
           <ul class="res-lista res-no" id="demo-no"></ul>
         </details>
         <div class="res-cta">
-          <a class="btn" href="https://creditohipotecarioecuador.com/evaluacion/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source">Ver evaluación completa y recibir asesoría gratuita <span aria-hidden="true">→</span></a>
+          <a class="btn" href="https://creditohipotecarioecuador.com/evaluacion/">Ver evaluación completa y recibir asesoría gratuita <span aria-hidden="true">→</span></a>
           <p class="nota">Resultado orientativo: no consulta tu buró de crédito y no es una oferta ni una aprobación. Cada entidad decide con su propio análisis.</p>
         </div>
       </div>
@@ -598,7 +618,8 @@
           <!-- /build:tabla --></tbody>
       </table>
     </div>
-    <p class="nota tabla-nota">Tasas nominales anuales referenciales. «Por verificar» significa que el dato viene de una fuente secundaria o está pendiente de confirmar con la entidad. Cada producto enlaza a su ficha en creditohipotecarioecuador.com, con requisitos, ventajas, desventajas y fuente.</p>
+    <p class="nota tabla-nota">Tasas nominales anuales referenciales. «Por verificar» significa que el dato viene de una fuente secundaria o está pendiente de confirmar con la entidad. Cada producto enlaza a su ficha en creditohipotecarioecuador.com, con requisitos, ventajas, desventajas y fuente. Para filtrar por tu situación usa el <a href="https://creditohipotecarioecuador.com/comparador/">comparador de créditos hipotecarios</a>; el orden por perfil está en el <a href="https://creditohipotecarioecuador.com/mejor-credito-hipotecario-ecuador/">ranking del mejor crédito hipotecario de Ecuador</a>.</p>
+    <p class="nota tabla-nota">Descarga directa (CC BY 4.0): <a href="https://raw.githubusercontent.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/main/data/programas.json"><code>programas.json</code></a> · <a href="https://raw.githubusercontent.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/main/data/entidades.json"><code>entidades.json</code></a> · <a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/blob/main/data/README.md">diccionario de datos</a>. Atribución: «Fuente: creditohipotecarioecuador.com».</p>
 
     <details class="entidades">
       <summary>Ver las <!-- build:nentidades -->39<!-- /build:nentidades --> entidades registradas</summary>
@@ -617,8 +638,8 @@
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Servidor MCP</p>
-      <h2 id="mcp-t">Úsalo desde Claude o ChatGPT</h2>
-      <p class="lead">Conecta tu asistente al servidor MCP y pregúntale en lenguaje natural: responde con el motor y los datos de este proyecto, no de memoria. Es remoto, de solo lectura y no pide cuenta ni clave.</p>
+      <h2 id="mcp-t">Servidor MCP para asistentes de IA</h2>
+      <p class="lead">Un servidor MCP remoto (Streamable HTTP), de solo lectura y sin autenticación, expone el motor y los datos como herramientas para Claude, ChatGPT y cualquier cliente compatible. Si no eres desarrollador, sigue la <a href="https://creditohipotecarioecuador.com/asistentes-ia/">guía paso a paso para conectar Claude o ChatGPT</a>.</p>
     </div>
 
     <div class="mcp-url">
@@ -650,7 +671,7 @@
         <p class="nota">La opción de conectores personalizados depende de tu plan y versión.</p>
       </article>
     </div>
-    <p class="mcp-mas">Pasos detallados y otros clientes: <a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/blob/main/docs/mcp.md">guía del servidor MCP</a>.</p>
+    <p class="mcp-mas">Referencia técnica y otros clientes: <a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/blob/main/docs/mcp.md">documentación del servidor MCP</a>. Instrucciones para usuarios, menú por menú: <a href="https://creditohipotecarioecuador.com/asistentes-ia/">crédito de vivienda en Claude y ChatGPT</a>.</p>
 
     <div class="mcp-cols">
       <div>
@@ -748,9 +769,9 @@ console.log(resultados[<span class="n">0</span>]);</code></pre>
   <div class="wrap cierre-in">
     <div>
       <h2 id="cierre-t">¿Buscas tu crédito, no el código?</h2>
-      <p>En Crédito Hipotecario Ecuador comparas todas las opciones, simulas tu cuota y recibes asesoría gratuita para elegir.</p>
+      <p>En el sitio puedes <a href="https://creditohipotecarioecuador.com/evaluacion/">saber a qué crédito de vivienda calificas</a>, usar el <a href="https://creditohipotecarioecuador.com/comparador/">comparador de tasas hipotecarias</a> y calcular tu cuota con el <a href="https://creditohipotecarioecuador.com/simulador/">simulador de crédito hipotecario</a>, con asesoría gratuita.</p>
     </div>
-    <a class="btn btn-lg" href="https://creditohipotecarioecuador.com/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source">Ir a creditohipotecarioecuador.com <span aria-hidden="true">→</span></a>
+    <a class="btn btn-lg" href="https://creditohipotecarioecuador.com/">Ir a creditohipotecarioecuador.com <span aria-hidden="true">→</span></a>
   </div>
 </section>
 
@@ -769,10 +790,12 @@ console.log(resultados[<span class="n">0</span>]);</code></pre>
     <nav aria-label="En el sitio">
       <h3>En el sitio</h3>
       <ul>
-        <li><a href="https://creditohipotecarioecuador.com/comparador/">Comparador de tasas</a></li>
-        <li><a href="https://creditohipotecarioecuador.com/simulador/">Simulador de cuota</a></li>
-        <li><a href="https://creditohipotecarioecuador.com/evaluacion/">¿A qué crédito califico?</a></li>
-        <li><a href="https://creditohipotecarioecuador.com/guias/">Guías</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/evaluacion/">Evaluación de perfil: ¿a qué crédito califico?</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/comparador/">Comparador de créditos hipotecarios</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/simulador/">Simulador de cuota hipotecaria</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/programas/">Programas y créditos de vivienda</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/biess/">Préstamo hipotecario BIESS</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/asistentes-ia/">Conector para Claude y ChatGPT</a></li>
       </ul>
     </nav>
     <nav aria-label="Proyecto">
