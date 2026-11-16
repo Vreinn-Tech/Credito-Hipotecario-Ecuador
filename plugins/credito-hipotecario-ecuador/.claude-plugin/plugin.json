@@ -1,8 +1,8 @@
 {
   "name": "credito-hipotecario-ecuador",
   "displayName": "Crédito Hipotecario Ecuador",
-  "version": "0.1.1",
-  "description": "Evalúa a qué créditos de vivienda califica una persona en Ecuador (BIESS, VIS/VIP Miti-Miti, bancos, cooperativas y mutualistas), simula cuotas y consulta 28 productos de 39 entidades. Incluye el servidor MCP remoto de creditohipotecarioecuador.com (solo lectura, sin cuenta) y una skill en español.",
+  "version": "0.1.2",
+  "description": "Estima de forma orientativa a qué créditos de vivienda podría calificar una persona en Ecuador (BIESS, VIS/VIP Miti-Miti, bancos, cooperativas y mutualistas), simula cuotas y consulta 28 productos de 39 entidades. No es una evaluación de solvencia ni una aprobación de crédito. Incluye el servidor MCP remoto de creditohipotecarioecuador.com (solo lectura, sin cuenta) y una skill en español.",
   "author": {
     "name": "Crédito Hipotecario Ecuador",
     "url": "https://creditohipotecarioecuador.com"

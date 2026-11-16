@@ -8,7 +8,7 @@ import { evaluarTodos, normalizarPerfil, USOS, RELACIONES_LABORALES } from '../e
 export const SITIO = 'https://creditohipotecarioecuador.com';
 export const URL_EVALUACION = `${SITIO}/evaluacion/`;
 export const AVISO =
-  'Datos referenciales con fecha (campo fechaDato de cada producto); no es una oferta de crédito ni asesoría financiera. ' +
+  'Resultado orientativo con datos referenciales con fecha (campo fechaDato de cada producto); no es una oferta ni una aprobación de crédito, ni asesoría financiera. ' +
   'Verifica tasas, requisitos y condiciones directamente con la entidad antes de decidir.';
 export const NOTA = `Nota: ${AVISO} Fuente: creditohipotecarioecuador.com — evaluación completa y gratuita en ${URL_EVALUACION}`;
 
@@ -35,6 +35,14 @@ const ETIQUETA_CATEGORIA = {
   subsidio: 'bono o subsidio del Estado',
 };
 const ETIQUETA_ELEGIBILIDAD = { apto: 'apto', condicional: 'condicional', no_apto: 'no apto' };
+
+/**
+ * Frase que llevan las herramientas que se aplican al caso de una persona (evaluar_perfil, capacidad_de_credito):
+ * deja claro que el resultado es orientativo y no sirve para decidir sobre el crédito de nadie.
+ */
+export const USO_ORIENTATIVO =
+  'Es una estimación orientativa con las reglas públicas de cada producto: no consulta buró de crédito ni datos personales, ' +
+  'no es una evaluación de solvencia ni una decisión, oferta o aprobación de crédito, y no debe usarse para decidir sobre el crédito de una persona.';
 
 /** Error de validación o de negocio: se devuelve al modelo como resultado con isError: true (no como error de protocolo). */
 export class ErrorDeHerramienta extends Error {}
@@ -112,7 +120,7 @@ const esquemaFuente = {
   properties: { nombre: { type: 'string' }, url: { type: 'string' }, evaluacionUrl: { type: 'string' } },
   required: ['nombre', 'url', 'evaluacionUrl'],
 };
-const pie = { aviso: { type: 'string', description: 'Aviso legal: datos referenciales, no es oferta de crédito ni asesoría.' }, fuente: esquemaFuente };
+const pie = { aviso: { type: 'string', description: 'Aviso legal: resultado orientativo con datos referenciales; no es oferta ni aprobación de crédito, ni asesoría.' }, fuente: esquemaFuente };
 const nulo = (type, description) => ({ type: [type, 'null'], description });
 
 const ANOTACIONES = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
@@ -248,11 +256,12 @@ export function crearHerramientas({ programas, entidades }) {
     name: 'evaluar_perfil',
     title: 'Evaluar perfil para crédito de vivienda (Ecuador)',
     description:
-      'Evalúa a qué créditos hipotecarios de Ecuador califica una persona (BIESS, tasa preferencial VIS/VIP "Miti-Miti", bancos, cooperativas y mutualistas) ' +
+      'Estima a qué créditos hipotecarios de Ecuador podría calificar una persona (BIESS, tasa preferencial VIS/VIP "Miti-Miti", bancos, cooperativas y mutualistas) ' +
       'según el precio de la vivienda, sus ingresos, entrada, deudas, afiliación al IESS y edad. Devuelve los productos ordenados de mejor a peor con ' +
       'elegibilidad (apto, condicional o no_apto), puntaje, motivos, monto financiable, cuota mensual estimada, plazo y entrada requerida. ' +
       'Úsala cuando pregunten "¿a qué crédito califico?", "¿me alcanza para una casa de X?" o quieran comparar opciones para su caso. ' +
-      'Montos en USD. Si faltan datos, pregunta al menos precio de la vivienda e ingreso mensual; el resto tiene valores por defecto conservadores.',
+      'Montos en USD. Si faltan datos, pregunta al menos precio de la vivienda e ingreso mensual; el resto tiene valores por defecto conservadores. ' +
+      USO_ORIENTATIVO,
     inputSchema: {
       type: 'object',
       additionalProperties: false,
@@ -388,7 +397,8 @@ export function crearHerramientas({ programas, entidades }) {
     description:
       'Calcula la cuota mensual fija (sistema francés, tasa nominal anual capitalizada cada mes) de un crédito: cuota, tasa efectiva anual, total de intereses y total pagado, ' +
       'con resumen anual o tabla de amortización mensual opcionales. Indica la tasa con "tasaNominalAnual" o pasa "programa" (slug de un producto) para usar la tasa publicada de ese producto. ' +
-      'Úsala para "¿cuánto pagaría al mes por X USD a N años?" o para comparar tasas y plazos. No incluye seguros ni gastos.',
+      'Úsala para "¿cuánto pagaría al mes por X USD a N años?" o para comparar tasas y plazos. No incluye seguros ni gastos. ' +
+      'Es un cálculo orientativo, no una oferta ni una aprobación de crédito.',
     inputSchema: {
       type: 'object',
       additionalProperties: false,
@@ -511,7 +521,8 @@ export function crearHerramientas({ programas, entidades }) {
     description:
       'Calcula cuánto crédito soportan unos ingresos: la cuota mensual máxima y el monto máximo financiable a una tasa y un plazo dados. ' +
       'Fórmula (la misma de evaluar_perfil): cuota máxima = ratioCuotaIngreso × (ingresoMensual − deudasMensuales); el monto es el capital que esa cuota paga con sistema francés. ' +
-      'Úsala para "¿cuánto me prestan si gano X?" o "¿hasta qué precio de casa puedo aspirar?". El resultado es un techo teórico por ingresos: cada entidad aplica además su propio análisis.',
+      'Úsala para "¿cuánto me prestan si gano X?" o "¿hasta qué precio de casa puedo aspirar?". El resultado es un techo teórico por ingresos: cada entidad aplica además su propio análisis. ' +
+      USO_ORIENTATIVO,
     inputSchema: {
       type: 'object',
       additionalProperties: false,

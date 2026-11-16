@@ -19,4 +19,4 @@ export {
 } from './servidor.js';
 export { crearManejadorHttp, URL_DOCUMENTACION, URL_MCP_PUBLICA } from './http.js';
 export { iniciarStdio } from './stdio.js';
-export { crearHerramientas, ErrorDeHerramienta, AVISO, NOTA } from './herramientas.js';
+export { crearHerramientas, ErrorDeHerramienta, AVISO, NOTA, USO_ORIENTATIVO } from './herramientas.js';

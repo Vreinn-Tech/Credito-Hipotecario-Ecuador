@@ -1,6 +1,6 @@
 {
   "name": "credito-hipotecario-ecuador",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Librería, CLI y servidor MCP sin dependencias, con datos abiertos de crédito de vivienda en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas): motor de elegibilidad y cálculo de cuotas.",
   "keywords": [
     "ecuador",
@@ -62,12 +62,16 @@
     "CHANGELOG.md",
     "LICENSE",
     "LICENSE-DATA.md",
-    "server.json"
+    "server.json",
+    "assets",
+    ".claude-plugin",
+    "plugins"
   ],
   "scripts": {
     "test": "node --test",
     "tablas": "node scripts/generar-tablas.mjs",
     "skill": "node scripts/empaquetar-skill.mjs",
+    "openai": "node scripts/empaquetar-openai.mjs",
     "docs": "node scripts/build-docs.mjs"
   }
 }

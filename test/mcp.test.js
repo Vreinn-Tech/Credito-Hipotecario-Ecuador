@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { crearServidorMcp, VERSIONES_SOPORTADAS, VERSION_MODERNA, NOTA } from '../src/mcp/index.js';
+import { crearServidorMcp, VERSIONES_SOPORTADAS, VERSION_MODERNA, NOTA, USO_ORIENTATIVO } from '../src/mcp/index.js';
 
 const leer = (f) => JSON.parse(readFileSync(new URL(`../data/${f}`, import.meta.url), 'utf8'));
 const programas = leer('programas.json');
@@ -23,6 +23,8 @@ test('initialize negocia la versión del cliente si la soporta', () => {
     assert.deepEqual(r.result.capabilities, { tools: { listChanged: false } });
     assert.equal(r.result.serverInfo.name, 'credito-hipotecario-ecuador');
     assert.match(r.result.instructions, /evaluar_perfil/);
+    assert.match(r.result.instructions, /orientativas/);
+    assert.match(r.result.instructions, /no deben usarse para decidir sobre el crédito de una persona/);
   }
 });
 
@@ -57,6 +59,14 @@ test('tools/list: ocho herramientas con esquema estricto y anotaciones de solo l
     assert.equal(t.annotations.destructiveHint, false);
     assert.ok(t.title);
   }
+  // Las herramientas que se aplican al caso de una persona dicen que el resultado es orientativo y no sirve para decidir su crédito.
+  const porNombre = Object.fromEntries(tools.map((t) => [t.name, t]));
+  assert.match(USO_ORIENTATIVO, /estimación orientativa/);
+  assert.match(USO_ORIENTATIVO, /no consulta buró de crédito ni datos personales/);
+  assert.match(USO_ORIENTATIVO, /no es una evaluación de solvencia ni una decisión, oferta o aprobación de crédito/);
+  assert.match(USO_ORIENTATIVO, /no debe usarse para decidir sobre el crédito de una persona/);
+  for (const nombre of ['evaluar_perfil', 'capacidad_de_credito']) assert.ok(porNombre[nombre].description.endsWith(USO_ORIENTATIVO), nombre);
+  assert.match(porNombre.simular_cuota.description, /orientativo, no una oferta ni una aprobación de crédito/);
 });
 
 test('tools/list se adapta a la versión: sin outputSchema antes de 2025-06-18 y sin anotaciones en 2024-11-05', () => {
@@ -279,7 +289,8 @@ test('todas las respuestas de herramientas terminan con la nota legal y la fuent
     const ultimo = r.content.at(-1).text;
     const texto = nombre === 'fetch' ? r.structuredContent.text : ultimo;
     assert.ok(texto.endsWith(NOTA), nombre);
-    assert.match(NOTA, /no es una oferta de crédito ni asesoría financiera/);
+    assert.match(NOTA, /orientativo/);
+    assert.match(NOTA, /no es una oferta ni una aprobación de crédito, ni asesoría financiera/);
     assert.match(NOTA, /creditohipotecarioecuador\.com/);
     assert.match(NOTA, /https:\/\/creditohipotecarioecuador\.com\/evaluacion\//);
     assert.match(NOTA, /fechaDato/);

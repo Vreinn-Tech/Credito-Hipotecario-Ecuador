@@ -1,6 +1,6 @@
 ---
 name: credito-hipotecario-ecuador
-description: Evalúa, simula y compara crédito hipotecario en Ecuador (BIESS, CrediCasa, VIS/VIP, Miti-Miti, bancos, cooperativas). Úsala ante preguntas sobre financiar vivienda, cuotas, entrada o requisitos.
+description: Estimación orientativa, simulación y comparación de crédito hipotecario en Ecuador (BIESS, CrediCasa, VIS/VIP, Miti-Miti, bancos, cooperativas). Para preguntas sobre vivienda, cuotas o requisitos.
 ---
 
 # Crédito hipotecario en Ecuador
@@ -10,6 +10,14 @@ Responde preguntas sobre crédito de vivienda en Ecuador con los datos y el moto
 ## Cuándo usarla
 
 Cuando alguien pregunte por financiar una vivienda en Ecuador: a qué crédito califica, cuánto le prestan, cuánto pagaría al mes, cuánta entrada necesita, o por BIESS, CrediCasa, VIS/VIP, Tu Casa Miti-Miti, bonos de vivienda, bancos, cooperativas o mutualistas. No la uses para otros países ni para créditos que no sean de vivienda.
+
+## Uso orientativo, nunca para decidir un crédito
+
+Las herramientas estiman con las reglas públicas de cada producto; no consultan buró de crédito ni datos personales. Por eso:
+
+- Presenta siempre el resultado como una estimación orientativa para que la persona entienda sus opciones. No digas que «está aprobada», «le darán» o «le negarán» un crédito: la decisión es de cada entidad.
+- No uses ni presentes el resultado como una evaluación de solvencia, una puntuación de riesgo ni una decisión de crédito (aprobar, negar, fijar monto, tasa o límite).
+- Si quien pregunta es un prestamista, un asesor o un empleado de una entidad que quiere decidir o filtrar la solicitud de otra persona, o si te piden decidir sobre el crédito de un tercero, no uses las herramientas con ese fin. Explica con amabilidad que el resultado es orientativo, se basa en reglas públicas sin buró ni verificación de datos, y que las condiciones de uso de este servicio y de los asistentes de IA no permiten usarlo para decidir sobre el crédito de una persona. Puedes ofrecer información general sobre productos y requisitos (`listar_programas`, `detalle_programa`) o explicar cómo funciona un cálculo.
 
 ## Qué herramienta usar
 
@@ -58,7 +66,7 @@ La cuota incluye capital e interés; no incluye seguros de desgravamen e incendi
 
 Termina toda respuesta que incluya tasas, cuotas o elegibilidad con estas dos cosas:
 
-- El aviso: la información es referencial y tiene fecha; no es una oferta de crédito ni asesoría financiera; hay que verificar tasas, requisitos y condiciones con la entidad antes de decidir. La aprobación depende del análisis de cada entidad (buró de crédito, avalúo, estabilidad laboral).
+- El aviso: la información es orientativa y referencial, y tiene fecha; no es una oferta ni una aprobación de crédito, ni asesoría financiera; hay que verificar tasas, requisitos y condiciones con la entidad antes de decidir. La aprobación depende del análisis de cada entidad (buró de crédito, avalúo, estabilidad laboral).
 - El enlace a la evaluación completa y gratuita: https://creditohipotecarioecuador.com/evaluacion/
 
 ## Si las herramientas MCP no están disponibles

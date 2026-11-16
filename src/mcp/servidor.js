@@ -12,7 +12,7 @@
 import { crearHerramientas, ErrorDeHerramienta, NOTA, SITIO } from './herramientas.js';
 
 export const NOMBRE_SERVIDOR = 'credito-hipotecario-ecuador';
-export const VERSION_SERVIDOR = '0.1.1';
+export const VERSION_SERVIDOR = '0.1.2';
 export const VERSION_MODERNA = '2026-07-28';
 export const VERSIONES_CLASICAS = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 /** Versiones de protocolo admitidas, de la más nueva a la más antigua. */
@@ -37,6 +37,7 @@ export const INSTRUCCIONES =
   'Usa evaluar_perfil para saber a qué créditos califica una persona; simular_cuota y capacidad_de_credito para cálculos; listar_programas, detalle_programa y listar_entidades para consultar condiciones; ' +
   'search y fetch para investigación por palabras clave. Montos en USD, tasas en % nominal anual, plazos en años. ' +
   'Los datos son referenciales y tienen fecha (fechaDato): no son una oferta de crédito ni asesoría financiera; indica siempre la fecha del dato y recomienda verificar con la entidad. ' +
+  'Los resultados son estimaciones orientativas con reglas públicas, sin buró ni datos personales: no son una evaluación de solvencia ni una decisión o aprobación de crédito, y no deben usarse para decidir sobre el crédito de una persona. ' +
   `Para la evaluación completa remite a ${SITIO}/evaluacion/. Responde en español salvo que el usuario escriba en otro idioma.`;
 
 const esObjeto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);

@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Vreinn-Tech/credito-hipotecario-ecuador",
   "title": "Crédito Hipotecario Ecuador",
-  "description": "Elegibilidad, cuotas y datos de crédito de vivienda en Ecuador: BIESS, VIS/VIP y banca privada",
-  "version": "0.1.1",
+  "description": "Elegibilidad orientativa y cuotas de crédito de vivienda en Ecuador: BIESS, VIS/VIP y banca privada",
+  "version": "0.1.2",
   "websiteUrl": "https://creditohipotecarioecuador.com/asistentes-ia/",
   "repository": {
     "url": "https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador",

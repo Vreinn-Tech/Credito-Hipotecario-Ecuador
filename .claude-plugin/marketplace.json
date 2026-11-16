@@ -1,6 +1,6 @@
 {
   "name": "credito-hipotecario-ecuador",
-  "description": "Crédito hipotecario en Ecuador para Claude: evaluación de elegibilidad, simulador de cuotas y datos abiertos de BIESS, VIS/VIP, bancos, cooperativas y mutualistas.",
+  "description": "Crédito hipotecario en Ecuador para Claude: estimación orientativa de elegibilidad, simulador de cuotas y datos abiertos de BIESS, VIS/VIP, bancos, cooperativas y mutualistas.",
   "owner": {
     "name": "Crédito Hipotecario Ecuador",
     "url": "https://creditohipotecarioecuador.com"
@@ -9,7 +9,7 @@
     {
       "name": "credito-hipotecario-ecuador",
       "source": "./plugins/credito-hipotecario-ecuador",
-      "description": "Conecta Claude con el servidor MCP de creditohipotecarioecuador.com (solo lectura, sin cuenta) y añade una skill para evaluar a qué créditos de vivienda califica una persona en Ecuador.",
+      "description": "Conecta Claude con el servidor MCP de creditohipotecarioecuador.com (solo lectura, sin cuenta) y añade una skill para estimar, de forma orientativa, a qué créditos de vivienda podría calificar una persona en Ecuador.",
       "category": "finance",
       "tags": ["ecuador", "credito-hipotecario", "vivienda", "biess", "mcp"]
     }

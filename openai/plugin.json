@@ -1,0 +1,119 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "credito-hipotecario-ecuador",
+  "version": "0.1.2",
+  "description": "Estimate, for guidance only, which home loans someone may qualify for in Ecuador, simulate monthly payments and compare BIESS, VIS/VIP, banks, credit unions and mutualistas, with dated official sources. Not a credit decision or approval.",
+  "author": {
+    "name": "GROU LLC",
+    "email": "contacto@creditohipotecarioecuador.com",
+    "url": "https://creditohipotecarioecuador.com"
+  },
+  "homepage": "https://creditohipotecarioecuador.com/asistentes-ia/",
+  "repository": "https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador",
+  "license": "MIT",
+  "keywords": [
+    "ecuador",
+    "mortgage",
+    "home-loan",
+    "biess",
+    "vis",
+    "vip",
+    "mcp"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Crédito Hipotecario Ecuador",
+        "shortDescription": "Ecuador home loan estimates",
+        "longDescription": "Crédito Hipotecario Ecuador gives ChatGPT the eligibility engine and open dataset behind creditohipotecarioecuador.com, so answers about home financing in Ecuador come from calculations and dated official sources instead of guesses.\n\nWhat it does (8 read-only tools, no account needed):\n- evaluar_perfil: given the home price and monthly household income (plus optional down payment, debts, IESS affiliation and contributions, age, intended use), estimates which mortgage products the person may qualify for under each product's published rules, with the reasons, financeable amount, estimated payment, term and required down payment.\n- simular_cuota: monthly payment, effective rate, total interest and an annual or monthly amortization schedule.\n- capacidad_de_credito: maximum payment and loan amount a given income supports.\n- listar_programas / detalle_programa: public (BIESS), preferential (VIS/VIP, Tu Casa Miti-Miti), private-bank products and housing subsidies, with requirements, steps, rates and limits.\n- listar_entidades: banks, credit unions and mutualistas by type and province.\n- search / fetch: keyword search and full-text documents for citation.\n\nEvery figure carries its source URL and data date. Amounts are in USD.\n\nInformational use only: results are guidance estimates based on each product's public rules. The tools do not check credit bureaus or collect personal data; they are not a creditworthiness assessment, a credit decision, an offer or a loan approval, and must not be used to make decisions about a person's credit. It is not financial advice and does not contact lenders or move money. Rates and requirements change, so users should confirm with the lender. Covers Ecuador only; tool output is in Spanish.",
+        "developerName": "GROU LLC",
+        "category": "Finance",
+        "capabilities": [],
+        "websiteURL": "https://creditohipotecarioecuador.com/asistentes-ia/",
+        "supportURL": "https://creditohipotecarioecuador.com/contacto/",
+        "privacyPolicyURL": "https://creditohipotecarioecuador.com/legal/privacidad/",
+        "termsOfServiceURL": "https://creditohipotecarioecuador.com/legal/terminos/",
+        "defaultPrompt": [
+          "I earn 1,200 USD a month, have 48 IESS contributions and want a 70,000 USD house. Which loans could I qualify for?",
+          "Monthly payment for 65,000 USD over 30 years with BIESS CrediCasa?",
+          "Which credit unions offer home loans in Loja, Ecuador?"
+        ],
+        "brandColor": "#0f6b4f",
+        "logo": "./assets/icon.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Guidance estimate for an IESS-affiliated salaried worker.",
+              "prompt": "Gano 1.200 USD al mes, estoy afiliado al IESS con 48 aportaciones y quiero una casa de 70.000 USD. ¿A qué crédito califico?",
+              "tools_triggered": [
+                "evaluar_perfil"
+              ],
+              "expected_behavior": "Calls evaluar_perfil with precioVivienda 70000, ingresoMensual 1200, afiliadoIess true, aportaciones 48 (may first ask whether the home is new and how much down payment is available). Lists products ranked by score, all conditional with this profile: BIESS CrediCasa first (65,000 USD maximum, so at least 5,000 USD down payment; estimated payment about 360 USD; new homes only), then Miti-Miti VIS and BIESS vivienda terminada, with reasons, data date and source. Presents the result as an informational estimate, not an approval, and ends with the disclaimer."
+            },
+            {
+              "description": "Payment simulation for a named product with yearly summary.",
+              "prompt": "¿Cuánto pagaría al mes por 65.000 USD a 30 años con CrediCasa del BIESS? Muéstrame el resumen por año.",
+              "tools_triggered": [
+                "simular_cuota"
+              ],
+              "expected_behavior": "Calls simular_cuota with monto 65000, plazoAnios 30, programa biess-credicasa, incluirTabla anual. Reports a monthly payment of about 273.69 USD at 2.99% nominal, total interest about 33,529 USD, and a 30-row yearly summary, noting that insurance and fees are not included."
+            },
+            {
+              "description": "Borrowing capacity for a couple with an existing car loan.",
+              "prompt": "Entre mi pareja y yo ganamos 2.400 USD y pagamos 300 de un auto. ¿Hasta cuánto nos prestan a 20 años al 9 %?",
+              "tools_triggered": [
+                "capacidad_de_credito"
+              ],
+              "expected_behavior": "Calls capacidad_de_credito with ingresoMensual 2400, deudasMensuales 300, tasaNominalAnual 9, plazoAnios 20. Reports a maximum monthly payment of 735 USD (35% of 2,100 USD) and a theoretical maximum loan of about 81,692 USD, explaining that each lender applies its own analysis."
+            },
+            {
+              "description": "Requirements and steps of a social housing program.",
+              "prompt": "¿Qué requisitos tiene Miti-Miti VIP y qué pasos sigo?",
+              "tools_triggered": [
+                "detalle_programa"
+              ],
+              "expected_behavior": "Calls detalle_programa with slug miti-miti-vip (optionally after listar_programas or search). Lists requirements, home price range, rate (4.99% effective annual maximum), 5% down payment, term up to 30 years and steps, with the official source and data date."
+            },
+            {
+              "description": "Lenders by type and province.",
+              "prompt": "¿Qué cooperativas dan crédito de vivienda en Loja?",
+              "tools_triggered": [
+                "listar_entidades"
+              ],
+              "expected_behavior": "Calls listar_entidades with tipo cooperativa and provincia loja. Lists the 5 credit unions with coverage in Loja or nationwide (JEP, Jardín Azuayo, 29 de Octubre, Policía Nacional, Mego), with their official websites."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Mortgage question for another country; the plugin covers Ecuador only and should not be used.",
+              "prompt": "What are current mortgage rates in Spain for a first home?"
+            },
+            {
+              "description": "Request to move money; the plugin has no payment or transfer capability.",
+              "prompt": "Pay my BIESS mortgage installment for this month from my bank account."
+            },
+            {
+              "description": "A lender asks to decide on an applicant's credit; the results are informational estimates and must not be used for credit decisions about a person.",
+              "prompt": "I'm a loan officer at a credit union. Should I approve or reject this applicant: earns 900 USD a month, wants 60,000 USD?"
+            }
+          ]
+        },
+        "commerce": false
+      },
+      "publication": {
+        "countries": [
+          "EC"
+        ],
+        "release_notes": "First public release: 8 read-only tools for informational home-loan estimates, payment simulation, borrowing capacity and lender data in Ecuador.",
+        "translations": {
+          "es-419": {
+            "subtitle": "Crédito de vivienda en Ecuador",
+            "description": "Crédito Hipotecario Ecuador le da a ChatGPT el motor de elegibilidad y los datos abiertos de creditohipotecarioecuador.com, para que las respuestas sobre financiar una vivienda en Ecuador salgan de cálculos y fuentes oficiales fechadas, no de suposiciones.\n\nQué hace (8 herramientas de solo lectura, sin cuenta):\n- evaluar_perfil: con el precio de la vivienda y el ingreso mensual del hogar (y, opcionalmente, entrada, deudas, afiliación y aportaciones al IESS, edad y destino), estima con las reglas publicadas de cada producto a qué créditos podría calificar la persona, con motivos, monto financiable, cuota estimada, plazo y entrada requerida.\n- simular_cuota: cuota mensual, tasa efectiva, intereses totales y tabla de amortización anual o mensual.\n- capacidad_de_credito: cuota y monto máximos que soportan unos ingresos.\n- listar_programas / detalle_programa: productos públicos (BIESS), preferenciales (VIS/VIP, Tu Casa Miti-Miti), de bancos privados y bonos de vivienda, con requisitos, pasos, tasas y límites.\n- listar_entidades: bancos, cooperativas y mutualistas por tipo y provincia.\n- search / fetch: búsqueda por palabras clave y documentos completos para citar.\n\nCada dato lleva su fuente y su fecha. Montos en USD.\n\nUso orientativo: los resultados son estimaciones con las reglas públicas de cada producto. Las herramientas no consultan buró de crédito ni recogen datos personales; no son una evaluación de solvencia ni una decisión, oferta o aprobación de crédito, y no deben usarse para decidir sobre el crédito de una persona. No es asesoría financiera, no contacta a entidades ni mueve dinero. Las tasas y requisitos cambian: hay que confirmarlos con la entidad. Solo cubre Ecuador; las respuestas de las herramientas están en español."
+          }
+        }
+      }
+    }
+  }
+}

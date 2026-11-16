@@ -1,6 +1,14 @@
 # Crédito Hipotecario Ecuador
 
-Plugin para Claude que responde preguntas sobre crédito de vivienda en Ecuador con datos y cálculos reales: a qué créditos califica una persona (BIESS, VIS/VIP Tu Casa Miti-Miti, bancos, cooperativas y mutualistas), cuánto pagaría al mes, cuánto le prestan según sus ingresos y qué requisitos y pasos tiene cada producto. Cada dato lleva su fuente oficial y su fecha.
+Plugin para Claude que responde preguntas sobre crédito de vivienda en Ecuador con datos y cálculos reales: una estimación orientativa de a qué créditos podría calificar una persona (BIESS, VIS/VIP Tu Casa Miti-Miti, bancos, cooperativas y mutualistas), cuánto pagaría al mes, cuánto le prestan según sus ingresos y qué requisitos y pasos tiene cada producto. Cada dato lleva su fuente oficial y su fecha.
+
+## Instalación
+
+En Claude Code:
+
+```text
+/plugin install credito-hipotecario-ecuador --marketplace Vreinn-Tech/Credito-Hipotecario-Ecuador
+```
 
 ## Qué incluye
 
@@ -19,5 +27,5 @@ Solo las cifras de cada consulta (por ejemplo, precio de la vivienda, ingreso y 
 
 ## Aviso
 
-Los resultados son referenciales. No son una oferta ni una aprobación de crédito, ni asesoría financiera: confirma tasas, requisitos y condiciones con la entidad. Soporte: contacto@creditohipotecarioecuador.com · Licencia: MIT.
+Los resultados son orientativos y referenciales: se calculan con las reglas públicas de cada producto, sin consultar buró de crédito ni datos personales. No son una evaluación de solvencia, una oferta ni una aprobación de crédito, ni asesoría financiera, y no deben usarse para decidir sobre el crédito de una persona. Confirma tasas, requisitos y condiciones con la entidad. Soporte: contacto@creditohipotecarioecuador.com · Licencia: MIT.
 ```

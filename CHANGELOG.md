@@ -4,6 +4,25 @@ Los cambios relevantes de este proyecto se anotan aquí. El formato sigue [Keep 
 
 Las correcciones de datos (una tasa, un plazo, un requisito) suben la versión de parche e indican la fecha del dato.
 
+## [0.1.2] - 2026-11-16
+
+Prepara la publicación en los directorios de Claude y ChatGPT. El motor, los datos y los nombres de las herramientas no cambian.
+
+### Añadido
+
+- Icono (`assets/icono.svg`, `assets/icono-512.png`, `assets/icono-1024.png`) y `plugins/credito-hipotecario-ecuador/.claude-plugin/icon.png` (512×512): resuelve el aviso `ICON_MISSING` de `claude plugin validate --strict`.
+- Paquete para el directorio de ChatGPT: manifiesto Agent Plugins en `openai/plugin.json` y `openai/mcp.json`, y `npm run openai` (`scripts/empaquetar-openai.mjs`), que valida los límites de OpenAI y genera `dist/credito-hipotecario-ecuador-openai.zip`.
+- `USO_ORIENTATIVO` exportado desde `credito-hipotecario-ecuador/mcp`.
+
+### Cambiado
+
+- `evaluar_perfil` empieza con «Estima a qué créditos… podría calificar» (antes «Evalúa… califica»). Las descripciones de `evaluar_perfil` y `capacidad_de_credito` terminan con: «Es una estimación orientativa con las reglas públicas de cada producto: no consulta buró de crédito ni datos personales, no es una evaluación de solvencia ni una decisión, oferta o aprobación de crédito, y no debe usarse para decidir sobre el crédito de una persona.»; la de `simular_cuota` aclara que es un cálculo orientativo. Las `instructions` de `initialize` dicen lo mismo en una línea.
+- El aviso de cada respuesta (`AVISO`/`NOTA`) dice «Resultado orientativo… no es una oferta ni una aprobación de crédito, ni asesoría financiera».
+- La skill añade la sección «Uso orientativo, nunca para decidir un crédito»: el resultado se presenta como orientativo y, si un prestamista o un tercero pide decidir sobre el crédito de una persona, el asistente no usa las herramientas con ese fin y explica por qué.
+- `plugin.json`, `marketplace.json`, `server.json` y el README del plugin hablan de estimación orientativa; el README del plugin añade la línea de instalación desde el marketplace.
+- Los ZIP de `scripts/empaquetar-skill.mjs` y `scripts/empaquetar-openai.mjs` comparten `scripts/zip.mjs`.
+- `files` del paquete npm incluye `assets`, `.claude-plugin` y `plugins` (con el icono).
+
 ## [0.1.1] - 2026-11-16
 
 Corrige tres fallos del motor de elegibilidad encontrados en una revisión externa. Los datos no cambian.
