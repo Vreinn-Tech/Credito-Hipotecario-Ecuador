@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluador de crédito hipotecario Ecuador · open source, datos y MCP</title>
+<meta name="description" content="Motor de elegibilidad y base de datos abierta de crédito de vivienda en Ecuador: BIESS, VIS/VIP, bancos, cooperativas y mutualistas. Demo en vivo, CLI, librería y servidor MCP para Claude y ChatGPT.">
+<link rel="canonical" href="https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0f6b4f">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_EC">
+<meta property="og:site_name" content="Crédito Hipotecario Ecuador · open source">
+<meta property="og:title" content="Evaluador de crédito hipotecario Ecuador, open source">
+<meta property="og:description" content="El motor de elegibilidad y los datos de BIESS, VIS/VIP, bancos, cooperativas y mutualistas, abiertos. Con CLI, librería y servidor MCP para Claude y ChatGPT.">
+<meta property="og:url" content="https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/">
+<meta property="og:image" content="https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Crédito Hipotecario Ecuador: evaluador de elegibilidad y datos abiertos de crédito de vivienda">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Evaluador de crédito hipotecario Ecuador, open source">
+<meta name="twitter:description" content="Motor de elegibilidad y datos abiertos de crédito de vivienda en Ecuador, con servidor MCP para Claude y ChatGPT.">
+<meta name="twitter:image" content="https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/og.png">
+<link rel="stylesheet" href="assets/styles.css">
+<!-- Los bloques "build:…" de esta página los regenera scripts/build-docs.mjs a partir de data/*.json. No edites su contenido a mano. -->
+<!-- build:jsonld -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://creditohipotecarioecuador.com/#organizacion",
+   "name": "Crédito Hipotecario Ecuador",
+   "url": "https://creditohipotecarioecuador.com/"
+  },
+  {
+   "@type": "SoftwareSourceCode",
+   "@id": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/#codigo",
+   "name": "credito-hipotecario-ecuador",
+   "description": "Evaluador de elegibilidad para crédito hipotecario en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas) con CLI y servidor MCP.",
+   "url": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/",
+   "codeRepository": "https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador",
+   "programmingLanguage": "JavaScript",
+   "runtimePlatform": "Node.js, navegadores",
+   "license": "https://opensource.org/licenses/MIT",
+   "inLanguage": "es",
+   "isBasedOn": "https://creditohipotecarioecuador.com/",
+   "author": {
+    "@id": "https://creditohipotecarioecuador.com/#organizacion"
+   },
+   "publisher": {
+    "@id": "https://creditohipotecarioecuador.com/#organizacion"
+   }
+  },
+  {
+   "@type": "Dataset",
+   "@id": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/#datos",
+   "name": "Productos y entidades de crédito hipotecario en Ecuador",
+   "description": "Condiciones referenciales de 28 productos de crédito de vivienda y bonos, y ficha de 39 entidades financieras de Ecuador: tasa nominal, plazo, financiamiento máximo, requisitos, fuente y fecha de cada dato.",
+   "url": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/#datos",
+   "license": "https://creativecommons.org/licenses/by/4.0/",
+   "inLanguage": "es",
+   "spatialCoverage": {
+    "@type": "Country",
+    "name": "Ecuador"
+   },
+   "dateModified": "2026-11-16",
+   "isAccessibleForFree": true,
+   "keywords": [
+    "crédito hipotecario",
+    "Ecuador",
+    "BIESS",
+    "VIS",
+    "VIP",
+    "tasas de interés",
+    "vivienda"
+   ],
+   "isBasedOn": "https://creditohipotecarioecuador.com/",
+   "creator": {
+    "@id": "https://creditohipotecarioecuador.com/#organizacion"
+   },
+   "publisher": {
+    "@id": "https://creditohipotecarioecuador.com/#organizacion"
+   },
+   "distribution": [
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/programas.json"
+    },
+    {
+     "@type": "DataDownload",
+     "encodingFormat": "application/json",
+     "contentUrl": "https://vreinn-tech.github.io/Credito-Hipotecario-Ecuador/assets/entidades.json"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<!-- /build:jsonld -->
+</head>
+<body>
+<a class="salto" href="#contenido">Saltar al contenido</a>
+
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a class="marca" href="https://creditohipotecarioecuador.com/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source" aria-label="Crédito Hipotecario Ecuador, ir al sitio">
+      <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#0f6b4f"/><path d="M20 9 8 19.5h3.6V31h6.6v-7h3.6v7h6.6V19.5H32z" fill="#fff"/><circle cx="30.5" cy="10.5" r="4.5" fill="#f6b73c"/></svg>
+      <span class="marca-txt">Crédito Hipotecario<b>Ecuador</b></span>
+    </a>
+    <span class="chip-os">open source</span>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#demo">Demo</a>
+      <a href="#motor">Motor</a>
+      <a href="#datos">Datos</a>
+      <a href="#mcp">Claude / ChatGPT</a>
+      <a href="#desarrolladores">Desarrolladores</a>
+    </nav>
+    <a class="btn btn-ghost btn-sm hdr-gh" href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador">
+      <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.93-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.33.66.07-.52.28-.87.5-1.07-1.77-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>
+      GitHub
+    </a>
+  </div>
+</header>
+
+<main id="contenido">
+
+<!-- 1. Hero -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="hero-txt">
+      <p class="eyebrow">Código MIT · Datos CC BY 4.0</p>
+      <h1>El evaluador de crédito hipotecario de Ecuador, <span class="h1-acento">abierto</span>.</h1>
+      <p class="lead"><!-- build:lead -->El motor de elegibilidad y la base de datos de 28 productos de vivienda y 39 entidades (BIESS, VIS/VIP, bancos, cooperativas y mutualistas) que usa <a href="https://creditohipotecarioecuador.com/">creditohipotecarioecuador.com</a>, publicados como código abierto y con servidor MCP para Claude y ChatGPT.<!-- /build:lead --></p>
+      <div class="cta">
+        <a class="btn btn-lg" href="https://creditohipotecarioecuador.com/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source">Evalúa tu perfil en creditohipotecarioecuador.com <span aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador">Ver el código en GitHub</a>
+        <a class="btn btn-ghost" href="#mcp">Usar con Claude / ChatGPT</a>
+      </div>
+    </div>
+    <div class="hero-datos" aria-label="La base de datos en cifras">
+      <p class="hero-datos-t">La base de datos, en cifras</p>
+      <dl class="stats"><!-- build:stats -->
+          <div class="stat"><dt>productos</dt><dd>28</dd><p>26 créditos y 2 bonos del Estado</p></div>
+          <div class="stat"><dt>entidades</dt><dd>39</dd><p>13 bancos, 20 cooperativas, 4 mutualistas, 2 entidades públicas</p></div>
+          <div class="stat"><dt>tasa nominal desde</dt><dd>2,99 %</dd><p>BIESS · CrediCasa; la más alta, 10,09 %</p></div>
+          <div class="stat"><dt>datos verificados</dt><dd>22<small> de 28</small></dd><p>Último dato: 16 nov 2026</p></div>
+        <!-- /build:stats --></dl>
+      <p class="hero-datos-n">Cifras calculadas desde <code>data/programas.json</code> y <code>data/entidades.json</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Demo -->
+<section class="sec" id="demo" aria-labelledby="demo-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Demo en vivo</p>
+      <h2 id="demo-t">Prueba el motor con tu perfil</h2>
+      <p class="lead">El mismo código del repositorio se ejecuta aquí, en tu navegador, sobre los datos reales. Nada de lo que escribes sale de esta página.</p>
+    </div>
+
+    <div class="aviso-nojs" id="demo-fallback">
+      <p><strong>La demo necesita JavaScript.</strong> Si no puedes activarlo, haz la evaluación completa y gratuita en
+      <a href="https://creditohipotecarioecuador.com/evaluacion/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source">creditohipotecarioecuador.com/evaluacion</a>.</p>
+    </div>
+
+    <div class="demo" id="demo-app" hidden>
+      <form class="card demo-form" id="demo-form" novalidate>
+        <h3>Tu perfil</h3>
+        <div class="campos">
+          <div class="campo">
+            <label for="f-precio">Precio de la vivienda</label>
+            <div class="in-usd"><span aria-hidden="true">$</span><input id="f-precio" name="precioVivienda" type="number" inputmode="numeric" min="1000" step="500" value="70000" required></div>
+          </div>
+          <div class="campo">
+            <label for="f-ingreso">Ingreso mensual del hogar</label>
+            <div class="in-usd"><span aria-hidden="true">$</span><input id="f-ingreso" name="ingresoMensual" type="number" inputmode="numeric" min="0" step="10" value="1200" required></div>
+          </div>
+          <div class="campo">
+            <label for="f-entrada">Ahorro para la entrada</label>
+            <div class="in-usd"><span aria-hidden="true">$</span><input id="f-entrada" name="entradaDisponible" type="number" inputmode="numeric" min="0" step="100" value="5000"></div>
+          </div>
+          <div class="campo">
+            <label for="f-deudas">Cuotas de otras deudas al mes</label>
+            <div class="in-usd"><span aria-hidden="true">$</span><input id="f-deudas" name="deudasMensuales" type="number" inputmode="numeric" min="0" step="10" value="0"></div>
+          </div>
+          <div class="campo">
+            <label for="f-edad">Edad</label>
+            <input id="f-edad" name="edad" type="number" inputmode="numeric" min="18" max="100" value="32">
+          </div>
+          <div class="campo">
+            <label for="f-plazo">Plazo deseado</label>
+            <select id="f-plazo" name="plazoDeseado">
+              <option value="10">10 años</option>
+              <option value="15">15 años</option>
+              <option value="20" selected>20 años</option>
+              <option value="25">25 años</option>
+              <option value="30">30 años</option>
+            </select>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="f-iess" name="afiliadoIess" checked> <span>Estoy afiliado al IESS</span></label>
+        <div class="campo campo-aport" id="aport-wrap">
+          <label for="f-aport">Aportaciones al IESS (meses)</label>
+          <input id="f-aport" name="aportaciones" type="number" inputmode="numeric" min="0" step="1" value="48">
+        </div>
+        <label class="check"><input type="checkbox" id="f-primera" name="primeraVivienda" checked> <span>Sería mi primera vivienda</span></label>
+        <button class="btn btn-brand btn-block" type="submit">Calcular</button>
+        <p class="nota">La demo asume compra de vivienda terminada y empleo en relación de dependencia. La evaluación completa del sitio pregunta además destino, provincia y situación laboral.</p>
+      </form>
+
+      <div class="demo-res">
+        <p class="error" id="demo-error" role="alert" hidden></p>
+        <p class="res-resumen" id="demo-resumen" aria-live="polite"></p>
+        <ol class="res-lista" id="demo-lista"></ol>
+        <details class="res-mas" id="demo-mas-wrap" hidden>
+          <summary id="demo-mas-sum"></summary>
+          <ol class="res-lista" id="demo-mas"></ol>
+        </details>
+        <details class="res-mas" id="demo-no-wrap" hidden>
+          <summary id="demo-no-sum"></summary>
+          <ul class="res-lista res-no" id="demo-no"></ul>
+        </details>
+        <div class="res-cta">
+          <a class="btn" href="https://creditohipotecarioecuador.com/evaluacion/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source">Ver evaluación completa y recibir asesoría gratuita <span aria-hidden="true">→</span></a>
+          <p class="nota">Resultado orientativo: no consulta tu buró de crédito y no es una oferta ni una aprobación. Cada entidad decide con su propio análisis.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Motor -->
+<section class="sec sec-alt" id="motor" aria-labelledby="motor-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Cómo funciona</p>
+      <h2 id="motor-t">Reglas explícitas, sin caja negra</h2>
+      <p class="lead">Cada producto se compara con tu perfil regla por regla. El resultado es uno de tres estados, <strong>calificas</strong>, <strong>calificas con condiciones</strong> o <strong>no calificas</strong>, siempre con el motivo escrito. Todo está en <a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/blob/main/src/evaluacion.js"><code>src/evaluacion.js</code></a>, unas 150 líneas sin dependencias.</p>
+    </div>
+
+    <div class="reglas">
+      <article class="card regla regla-no">
+        <h3><span class="punto" aria-hidden="true"></span>Reglas que bloquean</h3>
+        <p class="regla-sub">Basta una para que el producto quede como «no calificas».</p>
+        <ul>
+          <li>El producto no financia el destino que buscas (compra, construcción, terreno, remodelación o sustitución de hipoteca).</li>
+          <li>Exige afiliación al IESS y no la tienes, o tienes menos aportaciones que el mínimo.</li>
+          <li>Es solo para primera vivienda, o solo para vivienda nueva, y no es tu caso.</li>
+          <li>El precio de la vivienda está fuera del rango del programa (tope VIS/VIP o mínimo del segmento).</li>
+          <li>Tus ingresos familiares superan el tope del programa.</li>
+          <li>No llegas a la edad mínima, o por tu edad el plazo disponible sería menor al mínimo del producto.</li>
+          <li>La cuota superaría en más de un 40 % el límite cuota/ingreso del producto.</li>
+        </ul>
+      </article>
+      <article class="card regla regla-cond">
+        <h3><span class="punto" aria-hidden="true"></span>Reglas que condicionan</h3>
+        <p class="regla-sub">Sigues en carrera, pero con una observación que resolver.</p>
+        <ul>
+          <li>Tu ahorro no cubre la entrada mínima: el motor te dice cuánto falta.</li>
+          <li>Necesitas más que el monto máximo del producto (cubrirías la diferencia) o menos que su monto mínimo.</li>
+          <li>Por tu edad, el plazo se recorta para terminar de pagar antes de la edad máxima.</li>
+          <li>La cuota supera el límite cuota/ingreso, pero por un 40 % o menos: se sugiere más entrada o más plazo.</li>
+          <li>Eres independiente (deberás justificar ingresos) o vives en el exterior y el producto es público.</li>
+        </ul>
+      </article>
+      <article class="card regla regla-ok">
+        <h3><span class="punto" aria-hidden="true"></span>Puntaje de 0 a 100</h3>
+        <p class="regla-sub">Ordena los productos a los que sí calificas. Parte de 100 y resta:</p>
+        <ul>
+          <li><strong>Hasta 40 puntos</strong> por lo ajustada que queda la cuota: empieza a restar cuando usas más del 60 % del límite cuota/ingreso.</li>
+          <li><strong>Hasta 30 puntos</strong> por la tasa: 4 puntos por cada punto porcentual sobre 4,5 %.</li>
+          <li><strong>Hasta 20 puntos</strong> por observaciones: 6 por cada una.</li>
+          <li><strong>2 puntos</strong> si el dato del producto aún está por verificar.</li>
+        </ul>
+        <p class="regla-pie">«No calificas» vale 0. A igual puntaje, gana la cuota más baja. Los bonos del Estado no se puntúan: no son créditos.</p>
+      </article>
+    </div>
+
+    <div class="calc">
+      <div class="calc-txt">
+        <h3>Cómo se calcula la cuota</h3>
+        <p>Sistema francés: cuota fija, con la tasa nominal anual capitalizada cada mes. El monto es lo que te falta para llegar al precio, limitado por el porcentaje de financiamiento del producto (que en algunos varía según el valor de la vivienda) y por su monto máximo.</p>
+        <p>El plazo es el que pides, recortado al máximo del producto y a tu edad. La cuota se compara con tu <em>ingreso disponible</em>, es decir, el ingreso del hogar menos las cuotas de otras deudas, y cada producto define qué fracción de ese ingreso acepta (su relación cuota/ingreso). Con ese mismo límite se estima tu capacidad máxima de crédito.</p>
+      </div>
+      <div class="formula" role="group" aria-label="Fórmula de la cuota mensual">
+        <p class="formula-eq" aria-hidden="true">cuota = <span class="frac"><span>M · i</span><span>1 − (1 + i)<sup>−n</sup></span></span></p>
+        <p class="sr">Cuota igual a M por i, dividido para uno menos uno más i elevado a menos n.</p>
+        <dl>
+          <div><dt>M</dt><dd>monto financiado</dd></div>
+          <div><dt>i</dt><dd>tasa nominal anual ÷ 12</dd></div>
+          <div><dt>n</dt><dd>plazo en meses</dd></div>
+        </dl>
+        <p class="formula-n">Implementación: <a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/blob/main/src/finanzas.js"><code>src/finanzas.js</code></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Datos -->
+<section class="sec" id="datos" aria-labelledby="datos-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Instituciones y condiciones</p>
+      <h2 id="datos-t">Los datos, con fecha y fuente</h2>
+      <p class="lead"><!-- build:resumen -->28 productos de 20 entidades, con tasas nominales entre 2,99 % y 10,09 %. 22 fichas están verificadas contra la fuente oficial y 6 siguen por verificar. Último dato registrado: 16 nov 2026.<!-- /build:resumen --></p>
+    </div>
+
+    <div class="tabla-ctrl" id="tabla-ctrl" hidden>
+      <div class="filtros" role="group" aria-label="Filtrar por tipo">
+        <button type="button" class="filtro" data-grupo="" aria-pressed="true">Todos</button>
+        <button type="button" class="filtro" data-grupo="biess" aria-pressed="false">BIESS</button>
+        <button type="button" class="filtro" data-grupo="vis" aria-pressed="false">VIS/VIP</button>
+        <button type="button" class="filtro" data-grupo="banco" aria-pressed="false">Bancos</button>
+        <button type="button" class="filtro" data-grupo="cooperativa" aria-pressed="false">Cooperativas</button>
+        <button type="button" class="filtro" data-grupo="mutualista" aria-pressed="false">Mutualistas</button>
+        <button type="button" class="filtro" data-grupo="bono" aria-pressed="false">Bonos</button>
+      </div>
+      <div class="buscar">
+        <label class="sr" for="tabla-q">Buscar entidad o producto</label>
+        <input id="tabla-q" type="search" placeholder="Buscar entidad o producto" autocomplete="off">
+      </div>
+    </div>
+    <p class="tabla-cuenta" id="tabla-cuenta" aria-live="polite" hidden></p>
+
+    <div class="tabla-wrap">
+      <table class="tabla" id="tabla">
+        <caption class="sr">Productos de crédito de vivienda en Ecuador: entidad, tasa nominal, plazo máximo, financiamiento máximo, fecha del dato y estado de verificación</caption>
+        <thead>
+          <tr>
+            <th scope="col" data-orden="nombre" data-tipo="texto">Producto</th>
+            <th scope="col" class="c-ent" data-orden="entidad" data-tipo="texto">Entidad</th>
+            <th scope="col" class="num" data-orden="tasa" data-tipo="num">Tasa nominal</th>
+            <th scope="col" class="num" data-orden="plazo" data-tipo="num">Plazo máx.</th>
+            <th scope="col" class="num" data-orden="fin" data-tipo="num">Financia hasta</th>
+            <th scope="col" class="c-fecha" data-orden="fecha" data-tipo="texto">Fecha del dato</th>
+            <th scope="col" class="c-estado" data-orden="estado" data-tipo="num">Estado</th>
+          </tr>
+        </thead>
+        <tbody><!-- build:tabla -->
+            <tr data-grupo="biess" data-nombre="biess · credicasa 2,99 %" data-entidad="biess" data-tasa="2.99" data-plazo="30" data-fin="100" data-fecha="2026-04-01" data-estado="1" data-texto="biess · credicasa 2,99 % biess biess">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/biess-credicasa/">BIESS · CrediCasa 2,99 %</a><span class="m-meta">BIESS · 1 abr 2026 · verificado</span></th>
+              <td class="c-ent">BIESS</td>
+              <td class="num" data-l="Tasa nominal">2,99 %</td>
+              <td class="num" data-l="Plazo máx.">30 años</td>
+              <td class="num" data-l="Financia hasta">100 %</td>
+              <td class="c-fecha"><time datetime="2026-04-01">1 abr 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="biess" data-nombre="biess · vivienda terminada (nueva o usada)" data-entidad="biess" data-tasa="6.8" data-plazo="25" data-fin="95" data-fecha="2026-06-27" data-estado="1" data-texto="biess · vivienda terminada (nueva o usada) biess biess">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/biess-vivienda-terminada/">BIESS · Vivienda terminada (nueva o usada)</a><span class="m-meta">BIESS · 27 jun 2026 · verificado</span></th>
+              <td class="c-ent">BIESS</td>
+              <td class="num" data-l="Tasa nominal">6,80 %</td>
+              <td class="num" data-l="Plazo máx.">25 años</td>
+              <td class="num" data-l="Financia hasta">95 %</td>
+              <td class="c-fecha"><time datetime="2026-06-27">27 jun 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="biess" data-nombre="biess · construcción de vivienda" data-entidad="biess" data-tasa="6.8" data-plazo="25" data-fin="100" data-fecha="2026-01-15" data-estado="1" data-texto="biess · construccion de vivienda biess biess">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/biess-construccion/">BIESS · Construcción de vivienda</a><span class="m-meta">BIESS · 15 ene 2026 · verificado</span></th>
+              <td class="c-ent">BIESS</td>
+              <td class="num" data-l="Tasa nominal">6,80 %</td>
+              <td class="num" data-l="Plazo máx.">25 años</td>
+              <td class="num" data-l="Financia hasta">100 %</td>
+              <td class="c-fecha"><time datetime="2026-01-15">15 ene 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="biess" data-nombre="biess · compra de terreno" data-entidad="biess" data-tasa="6.8" data-plazo="10" data-fin="90" data-fecha="2026-01-15" data-estado="1" data-texto="biess · compra de terreno biess biess">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/biess-terreno/">BIESS · Compra de terreno</a><span class="m-meta">BIESS · 15 ene 2026 · verificado</span></th>
+              <td class="c-ent">BIESS</td>
+              <td class="num" data-l="Tasa nominal">6,80 %</td>
+              <td class="num" data-l="Plazo máx.">10 años</td>
+              <td class="num" data-l="Financia hasta">90 %</td>
+              <td class="c-fecha"><time datetime="2026-01-15">15 ene 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="biess" data-nombre="biess · ampliación y remodelación" data-entidad="biess" data-tasa="6.8" data-plazo="15" data-fin="50" data-fecha="2021-01-25" data-estado="0" data-texto="biess · ampliacion y remodelacion biess biess">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/biess-remodelacion/">BIESS · Ampliación y remodelación</a><span class="m-meta">BIESS · 25 ene 2021 · por verificar</span></th>
+              <td class="c-ent">BIESS</td>
+              <td class="num" data-l="Tasa nominal">6,80 %</td>
+              <td class="num" data-l="Plazo máx.">15 años</td>
+              <td class="num" data-l="Financia hasta">50 %</td>
+              <td class="c-fecha"><time datetime="2021-01-25">25 ene 2021</time></td>
+              <td class="c-estado"><span class="estado estado-pend">Por verificar</span></td>
+            </tr>
+            <tr data-grupo="biess" data-nombre="biess · sustitución de hipoteca" data-entidad="biess" data-tasa="6.8" data-plazo="25" data-fin="80" data-fecha="2026-01-15" data-estado="1" data-texto="biess · sustitucion de hipoteca biess biess">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/biess-sustitucion-hipoteca/">BIESS · Sustitución de hipoteca</a><span class="m-meta">BIESS · 15 ene 2026 · verificado</span></th>
+              <td class="c-ent">BIESS</td>
+              <td class="num" data-l="Tasa nominal">6,80 %</td>
+              <td class="num" data-l="Plazo máx.">25 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-01-15">15 ene 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="vis" data-nombre="tu casa miti-miti · vip (vivienda de interés público) al 4,99 % efectivo anual" data-entidad="mit" data-tasa="4.88" data-plazo="30" data-fin="95" data-fecha="2026-03-23" data-estado="1" data-texto="tu casa miti-miti · vip (vivienda de interes publico) al 4,99 % efectivo anual mit vis/vip">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/miti-miti-vip/">Tu Casa Miti-Miti · VIP (Vivienda de Interés Público) al 4,99 % efectivo anual</a><span class="m-meta">MIT · 23 mar 2026 · verificado</span></th>
+              <td class="c-ent">MIT<span class="tipo">VIS/VIP</span></td>
+              <td class="num" data-l="Tasa nominal">4,88 %</td>
+              <td class="num" data-l="Plazo máx.">30 años</td>
+              <td class="num" data-l="Financia hasta">95 %</td>
+              <td class="c-fecha"><time datetime="2026-03-23">23 mar 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="vis" data-nombre="tu casa miti-miti · vis (vivienda de interés social) al 4,99 % efectivo anual" data-entidad="mit" data-tasa="4.88" data-plazo="30" data-fin="95" data-fecha="2026-07-06" data-estado="1" data-texto="tu casa miti-miti · vis (vivienda de interes social) al 4,99 % efectivo anual mit vis/vip">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/miti-miti-vis/">Tu Casa Miti-Miti · VIS (Vivienda de Interés Social) al 4,99 % efectivo anual</a><span class="m-meta">MIT · 6 jul 2026 · verificado</span></th>
+              <td class="c-ent">MIT<span class="tipo">VIS/VIP</span></td>
+              <td class="num" data-l="Tasa nominal">4,88 %</td>
+              <td class="num" data-l="Plazo máx.">30 años</td>
+              <td class="num" data-l="Financia hasta">95 %</td>
+              <td class="c-fecha"><time datetime="2026-07-06">6 jul 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="bono" data-nombre="bono 'yapa pa' tu casa' · hasta 10.122 usd para la entrada" data-entidad="mit" data-tasa="" data-plazo="30" data-fin="" data-fecha="2026-10-28" data-estado="1" data-texto="bono 'yapa pa' tu casa' · hasta 10.122 usd para la entrada mit bonos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/yapa-pa-tu-casa/">Bono 'Yapa Pa' Tu Casa' · hasta 10.122 USD para la entrada</a><span class="m-meta">MIT · 28 oct 2026 · verificado</span></th>
+              <td class="c-ent">MIT<span class="tipo">Bonos</span></td>
+              <td class="num" data-l="Tasa nominal">—</td>
+              <td class="num" data-l="Plazo máx.">30 años</td>
+              <td class="num" data-l="Financia hasta">—</td>
+              <td class="c-fecha"><time datetime="2026-10-28">28 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="bono" data-nombre="casa 100 · vivienda 100 % subsidiada" data-entidad="mit" data-tasa="" data-plazo="" data-fin="100" data-fecha="2026-07-06" data-estado="1" data-texto="casa 100 · vivienda 100 % subsidiada mit bonos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/casa-100/">Casa 100 · vivienda 100 % subsidiada</a><span class="m-meta">MIT · 6 jul 2026 · verificado</span></th>
+              <td class="c-ent">MIT<span class="tipo">Bonos</span></td>
+              <td class="num" data-l="Tasa nominal">—</td>
+              <td class="num" data-l="Plazo máx.">—</td>
+              <td class="num" data-l="Financia hasta">100 %</td>
+              <td class="c-fecha"><time datetime="2026-07-06">6 jul 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="banco" data-nombre="banco pichincha · crédito hipotecario de vivienda (habitar)" data-entidad="banco pichincha" data-tasa="9.02" data-plazo="20" data-fin="83" data-fecha="2026-08-01" data-estado="0" data-texto="banco pichincha · credito hipotecario de vivienda (habitar) banco pichincha bancos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/banco-pichincha-hipotecario/">Banco Pichincha · Crédito Hipotecario de vivienda (Habitar)</a><span class="m-meta">Banco Pichincha · 1 ago 2026 · por verificar</span></th>
+              <td class="c-ent">Banco Pichincha<span class="tipo">Bancos</span></td>
+              <td class="num" data-l="Tasa nominal">9,02 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">83 %</td>
+              <td class="c-fecha"><time datetime="2026-08-01">1 ago 2026</time></td>
+              <td class="c-estado"><span class="estado estado-pend">Por verificar</span></td>
+            </tr>
+            <tr data-grupo="banco" data-nombre="produbanco · crédito hipotecario" data-entidad="produbanco" data-tasa="10.09" data-plazo="20" data-fin="80" data-fecha="2026-04-01" data-estado="1" data-texto="produbanco · credito hipotecario produbanco bancos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/produbanco-hipotecario/">Produbanco · Crédito Hipotecario</a><span class="m-meta">Produbanco · 1 abr 2026 · verificado</span></th>
+              <td class="c-ent">Produbanco<span class="tipo">Bancos</span></td>
+              <td class="num" data-l="Tasa nominal">10,09 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-04-01">1 abr 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="banco" data-nombre="banco del pacífico · hipoteca pacífico" data-entidad="banco del pacífico" data-tasa="7.5" data-plazo="30" data-fin="80" data-fecha="2026-10-01" data-estado="1" data-texto="banco del pacifico · hipoteca pacifico banco del pacifico bancos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/banco-pacifico-hipotecario/">Banco del Pacífico · Hipoteca Pacífico</a><span class="m-meta">Banco del Pacífico · 1 oct 2026 · verificado</span></th>
+              <td class="c-ent">Banco del Pacífico<span class="tipo">Bancos</span></td>
+              <td class="num" data-l="Tasa nominal">7,50 %</td>
+              <td class="num" data-l="Plazo máx.">30 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-01">1 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="banco" data-nombre="banco bolivariano · credimax hipotecario – compra de vivienda" data-entidad="banco bolivariano" data-tasa="7.5" data-plazo="20" data-fin="80" data-fecha="2026-10-31" data-estado="1" data-texto="banco bolivariano · credimax hipotecario – compra de vivienda banco bolivariano bancos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/banco-bolivariano-hipotecario/">Banco Bolivariano · Credimax Hipotecario – compra de vivienda</a><span class="m-meta">Banco Bolivariano · 31 oct 2026 · verificado</span></th>
+              <td class="c-ent">Banco Bolivariano<span class="tipo">Bancos</span></td>
+              <td class="num" data-l="Tasa nominal">7,50 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="banco" data-nombre="banco internacional · compra de vivienda" data-entidad="banco internacional" data-tasa="8.79" data-plazo="20" data-fin="80" data-fecha="2026-10-31" data-estado="1" data-texto="banco internacional · compra de vivienda banco internacional bancos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/banco-internacional-hipotecario/">Banco Internacional · Compra de vivienda</a><span class="m-meta">Banco Internacional · 31 oct 2026 · verificado</span></th>
+              <td class="c-ent">Banco Internacional<span class="tipo">Bancos</span></td>
+              <td class="num" data-l="Tasa nominal">8,79 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="banco" data-nombre="banco procredit · cartera inmobiliaria / vivienda" data-entidad="banco procredit" data-tasa="8.62" data-plazo="20" data-fin="80" data-fecha="2026-11-01" data-estado="1" data-texto="banco procredit · cartera inmobiliaria / vivienda banco procredit bancos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/banco-procredit-hipotecario/">Banco ProCredit · Cartera inmobiliaria / Vivienda</a><span class="m-meta">Banco ProCredit · 1 nov 2026 · verificado</span></th>
+              <td class="c-ent">Banco ProCredit<span class="tipo">Bancos</span></td>
+              <td class="num" data-l="Tasa nominal">8,62 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-11-01">1 nov 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="banco" data-nombre="banco general rumiñahui · bgr tu casa (civil)" data-entidad="banco general rumiñahui" data-tasa="7.6" data-plazo="20" data-fin="80" data-fecha="2026-10-31" data-estado="1" data-texto="banco general ruminahui · bgr tu casa (civil) banco general ruminahui bancos">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/bgr-hipotecario/">Banco General Rumiñahui · BGR Tu Casa (civil)</a><span class="m-meta">Banco General Rumiñahui · 31 oct 2026 · verificado</span></th>
+              <td class="c-ent">Banco General Rumiñahui<span class="tipo">Bancos</span></td>
+              <td class="num" data-l="Tasa nominal">7,60 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="mutualista" data-nombre="mutualista azuay · crédito para casa nueva" data-entidad="mutualista azuay" data-tasa="7.49" data-plazo="20" data-fin="80" data-fecha="2026-10-31" data-estado="1" data-texto="mutualista azuay · credito para casa nueva mutualista azuay mutualistas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/mutualista-azuay-hipotecario/">Mutualista Azuay · Crédito para casa nueva</a><span class="m-meta">Mutualista Azuay · 31 oct 2026 · verificado</span></th>
+              <td class="c-ent">Mutualista Azuay<span class="tipo">Mutualistas</span></td>
+              <td class="num" data-l="Tasa nominal">7,49 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="mutualista" data-nombre="mutualista imbabura · mi nueva vivienda" data-entidad="mutualista imbabura" data-tasa="8.74" data-plazo="15" data-fin="80" data-fecha="2026-11-01" data-estado="1" data-texto="mutualista imbabura · mi nueva vivienda mutualista imbabura mutualistas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/mutualista-imbabura-hipotecario/">Mutualista Imbabura · Mi Nueva Vivienda</a><span class="m-meta">Mutualista Imbabura · 1 nov 2026 · verificado</span></th>
+              <td class="c-ent">Mutualista Imbabura<span class="tipo">Mutualistas</span></td>
+              <td class="num" data-l="Tasa nominal">8,74 %</td>
+              <td class="num" data-l="Plazo máx.">15 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-11-01">1 nov 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa jep · credimivivienda" data-entidad="cooperativa jep" data-tasa="8.88" data-plazo="20" data-fin="70" data-fecha="2026-09-01" data-estado="0" data-texto="cooperativa jep · credimivivienda cooperativa jep cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/jep-hipotecario/">Cooperativa JEP · CrediMIVIVIENDA</a><span class="m-meta">Cooperativa JEP · 1 sep 2026 · por verificar</span></th>
+              <td class="c-ent">Cooperativa JEP<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">8,88 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">70 %</td>
+              <td class="c-fecha"><time datetime="2026-09-01">1 sep 2026</time></td>
+              <td class="c-estado"><span class="estado estado-pend">Por verificar</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa jardín azuayo · crédito de vivienda" data-entidad="cooperativa jardín azuayo" data-tasa="8.65" data-plazo="15" data-fin="80" data-fecha="2026-10-31" data-estado="1" data-texto="cooperativa jardin azuayo · credito de vivienda cooperativa jardin azuayo cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/jardin-azuayo-hipotecario/">Cooperativa Jardín Azuayo · Crédito de Vivienda</a><span class="m-meta">Cooperativa Jardín Azuayo · 31 oct 2026 · verificado</span></th>
+              <td class="c-ent">Cooperativa Jardín Azuayo<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">8,65 %</td>
+              <td class="num" data-l="Plazo máx.">15 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa andalucía · crédito inmobiliario" data-entidad="cooperativa andalucía" data-tasa="8.6" data-plazo="16" data-fin="80" data-fecha="2026-10-03" data-estado="0" data-texto="cooperativa andalucia · credito inmobiliario cooperativa andalucia cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/andalucia-hipotecario/">Cooperativa Andalucía · Crédito inmobiliario</a><span class="m-meta">Cooperativa Andalucía · 3 oct 2026 · por verificar</span></th>
+              <td class="c-ent">Cooperativa Andalucía<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">8,60 %</td>
+              <td class="num" data-l="Plazo máx.">16 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-03">3 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-pend">Por verificar</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa mushuc runa · impulso inmobiliario" data-entidad="cooperativa mushuc runa" data-tasa="9.55" data-plazo="20" data-fin="80" data-fecha="2026-10-31" data-estado="0" data-texto="cooperativa mushuc runa · impulso inmobiliario cooperativa mushuc runa cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/mushuc-runa-hipotecario/">Cooperativa Mushuc Runa · Impulso Inmobiliario</a><span class="m-meta">Cooperativa Mushuc Runa · 31 oct 2026 · por verificar</span></th>
+              <td class="c-ent">Cooperativa Mushuc Runa<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">9,55 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-pend">Por verificar</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa riobamba · crédito vivienda" data-entidad="cooperativa riobamba" data-tasa="8.7" data-plazo="13" data-fin="80" data-fecha="2026-11-01" data-estado="1" data-texto="cooperativa riobamba · credito vivienda cooperativa riobamba cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/riobamba-hipotecario/">Cooperativa Riobamba · Crédito vivienda</a><span class="m-meta">Cooperativa Riobamba · 1 nov 2026 · verificado</span></th>
+              <td class="c-ent">Cooperativa Riobamba<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">8,70 %</td>
+              <td class="num" data-l="Plazo máx.">13 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-11-01">1 nov 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa atuntaqui · credi vivienda" data-entidad="cooperativa atuntaqui" data-tasa="8.7" data-plazo="20" data-fin="80" data-fecha="2026-10-31" data-estado="1" data-texto="cooperativa atuntaqui · credi vivienda cooperativa atuntaqui cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/atuntaqui-hipotecario/">Cooperativa Atuntaqui · Credi Vivienda</a><span class="m-meta">Cooperativa Atuntaqui · 31 oct 2026 · verificado</span></th>
+              <td class="c-ent">Cooperativa Atuntaqui<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">8,70 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa tulcán · credi vivienda" data-entidad="cooperativa tulcán" data-tasa="8.5" data-plazo="12" data-fin="80" data-fecha="2026-10-31" data-estado="1" data-texto="cooperativa tulcan · credi vivienda cooperativa tulcan cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/tulcan-hipotecario/">Cooperativa Tulcán · Credi Vivienda</a><span class="m-meta">Cooperativa Tulcán · 31 oct 2026 · verificado</span></th>
+              <td class="c-ent">Cooperativa Tulcán<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">8,50 %</td>
+              <td class="num" data-l="Plazo máx.">12 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa pablo muñoz vega · crédito hipotecario (vivienda)" data-entidad="cooperativa pablo muñoz vega" data-tasa="8.79" data-plazo="15" data-fin="80" data-fecha="2026-10-01" data-estado="1" data-texto="cooperativa pablo munoz vega · credito hipotecario (vivienda) cooperativa pablo munoz vega cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/pablo-munoz-vega-hipotecario/">Cooperativa Pablo Muñoz Vega · Crédito Hipotecario (Vivienda)</a><span class="m-meta">Cooperativa Pablo Muñoz Vega · 1 oct 2026 · verificado</span></th>
+              <td class="c-ent">Cooperativa Pablo Muñoz Vega<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">8,79 %</td>
+              <td class="num" data-l="Plazo máx.">15 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-01">1 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-ok">Verificado</span></td>
+            </tr>
+            <tr data-grupo="cooperativa" data-nombre="cooperativa vicentina manuel esteban godoy (mego) · crédito con hipoteca" data-entidad="cooperativa vicentina manuel esteban godoy" data-tasa="9.99" data-plazo="20" data-fin="80" data-fecha="2026-10-31" data-estado="0" data-texto="cooperativa vicentina manuel esteban godoy (mego) · credito con hipoteca cooperativa vicentina manuel esteban godoy cooperativas">
+              <th scope="row"><a href="https://creditohipotecarioecuador.com/programas/mego-hipotecario/">Cooperativa Vicentina Manuel Esteban Godoy (Mego) · Crédito con hipoteca</a><span class="m-meta">Cooperativa Vicentina Manuel Esteban Godoy · 31 oct 2026 · por verificar</span></th>
+              <td class="c-ent">Cooperativa Vicentina Manuel Esteban Godoy<span class="tipo">Cooperativas</span></td>
+              <td class="num" data-l="Tasa nominal">9,99 %</td>
+              <td class="num" data-l="Plazo máx.">20 años</td>
+              <td class="num" data-l="Financia hasta">80 %</td>
+              <td class="c-fecha"><time datetime="2026-10-31">31 oct 2026</time></td>
+              <td class="c-estado"><span class="estado estado-pend">Por verificar</span></td>
+            </tr>
+          <!-- /build:tabla --></tbody>
+      </table>
+    </div>
+    <p class="nota tabla-nota">Tasas nominales anuales referenciales. «Por verificar» significa que el dato viene de una fuente secundaria o está pendiente de confirmar con la entidad. Cada producto enlaza a su ficha en creditohipotecarioecuador.com, con requisitos, ventajas, desventajas y fuente.</p>
+
+    <details class="entidades">
+      <summary>Ver las <!-- build:nentidades -->39<!-- /build:nentidades --> entidades registradas</summary>
+      <div class="ent-grid"><!-- build:entidades -->
+          <div class="ent-grupo"><h4>Públicas <span>2</span></h4><ul><li>BIESS</li><li>MIT</li></ul></div>
+          <div class="ent-grupo"><h4>Bancos <span>13</span></h4><ul><li>Banco Pichincha</li><li>Banco Guayaquil</li><li>Produbanco</li><li>Banco del Pacífico</li><li>Banco Bolivariano</li><li>Banco Internacional</li><li>Banco del Austro</li><li>Banco de Machala</li><li>Banco Solidario</li><li>Banco ProCredit</li><li>Banco General Rumiñahui</li><li>Banco de Loja</li><li>Banco Amazonas</li></ul></div>
+          <div class="ent-grupo"><h4>Mutualistas <span>4</span></h4><ul><li>Mutualista Pichincha</li><li>Mutualista Azuay</li><li>Mutualista Imbabura</li><li>Mutualista Ambato</li></ul></div>
+          <div class="ent-grupo"><h4>Cooperativas <span>20</span></h4><ul><li>Cooperativa JEP</li><li>Cooperativa Jardín Azuayo</li><li>Cooperativa 29 de Octubre</li><li>Cooprogreso</li><li>Cooperativa Alianza del Valle</li><li>Cooperativa Policía Nacional</li><li>Cooperativa Oscus</li><li>Cooperativa San Francisco</li><li>CACPECO</li><li>Cooperativa Andalucía</li><li>Cooperativa Mushuc Runa</li><li>Cooperativa Riobamba</li><li>Cooperativa Atuntaqui</li><li>Cooperativa El Sagrario</li><li>Cooperativa Tulcán</li><li>Cooperativa Pablo Muñoz Vega</li><li>Cooperativa Santa Rosa</li><li>Cooperativa Vicentina Manuel Esteban Godoy</li><li>CACPE Biblián</li><li>CACPE Pastaza</li></ul></div>
+        <!-- /build:entidades --></div>
+    </details>
+  </div>
+</section>
+
+<!-- 5. MCP -->
+<section class="sec sec-osc" id="mcp" aria-labelledby="mcp-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Servidor MCP</p>
+      <h2 id="mcp-t">Úsalo desde Claude o ChatGPT</h2>
+      <p class="lead">Conecta tu asistente al servidor MCP y pregúntale en lenguaje natural: responde con el motor y los datos de este proyecto, no de memoria. Es remoto, de solo lectura y no pide cuenta ni clave.</p>
+    </div>
+
+    <div class="mcp-url">
+      <span class="mcp-url-l">URL del servidor · Streamable HTTP</span>
+      <div class="copiable"><code id="mcp-url">https://creditohipotecarioecuador.com/mcp</code></div>
+    </div>
+
+    <div class="clientes">
+      <article class="cliente">
+        <h3>Claude Code</h3>
+        <p>Un comando en la terminal:</p>
+        <pre data-copiar class="cmd"><code>claude mcp add --transport http credito-hipotecario-ecuador https://creditohipotecarioecuador.com/mcp</code></pre>
+      </article>
+      <article class="cliente">
+        <h3>Claude (claude.ai y Desktop)</h3>
+        <ol>
+          <li>Abre la configuración de conectores.</li>
+          <li>Añade un conector personalizado y pega la URL del servidor.</li>
+          <li>Guárdalo (no pide credenciales) y actívalo en tu conversación.</li>
+        </ol>
+      </article>
+      <article class="cliente">
+        <h3>ChatGPT</h3>
+        <ol>
+          <li>Abre la configuración de conectores o apps.</li>
+          <li>Crea un conector MCP nuevo con la URL del servidor, sin autenticación.</li>
+          <li>Actívalo en el chat y haz tu pregunta.</li>
+        </ol>
+        <p class="nota">La opción de conectores personalizados depende de tu plan y versión.</p>
+      </article>
+    </div>
+    <p class="mcp-mas">Pasos detallados y otros clientes: <a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/blob/main/docs/mcp.md">guía del servidor MCP</a>.</p>
+
+    <div class="mcp-cols">
+      <div>
+        <h3>Preguntas de ejemplo</h3>
+        <ul class="preguntas">
+          <li>«Gano 1.200 USD, soy afiliado al IESS con 48 aportaciones y quiero una casa de 70.000 USD. ¿A qué créditos califico?»</li>
+          <li>«¿Cuánto pagaría al mes por 60.000 USD a 20 años al 7,5 %?»</li>
+          <li>«Con ingresos de 1.800 USD y 300 USD en otras deudas, ¿hasta cuánto me prestarían?»</li>
+          <li>«Compara las condiciones de las cooperativas que financian vivienda.»</li>
+          <li>«¿Qué requisitos tiene Miti-Miti VIS y de cuándo es el dato?»</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Herramientas</h3>
+        <dl class="tools">
+          <div><dt><code>evaluar_perfil</code></dt><dd>Evalúa un perfil contra todos los productos y los ordena.</dd></div>
+          <div><dt><code>simular_cuota</code></dt><dd>Cuota mensual por sistema francés.</dd></div>
+          <div><dt><code>capacidad_de_credito</code></dt><dd>Monto máximo que soporta un ingreso.</dd></div>
+          <div><dt><code>listar_programas</code></dt><dd>Productos de crédito y bonos.</dd></div>
+          <div><dt><code>detalle_programa</code></dt><dd>Ficha completa de un producto.</dd></div>
+          <div><dt><code>listar_entidades</code></dt><dd>Bancos, cooperativas, mutualistas y entidades públicas.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Desarrolladores -->
+<section class="sec" id="desarrolladores" aria-labelledby="dev-t">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Para desarrolladores</p>
+      <h2 id="dev-t">CLI, librería y datos en JSON</h2>
+      <p class="lead">JavaScript ESM puro, sin dependencias: corre igual en Node, en el navegador y en Workers.</p>
+    </div>
+
+    <div class="dev">
+      <div class="dev-col">
+      <article class="dev-b">
+        <h3>Desde la terminal</h3>
+        <p>Sin instalar nada, con <code>npx</code>:</p>
+        <pre data-copiar class="cmd"><code>npx github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48</code></pre>
+      </article>
+      <article class="dev-b">
+        <h3>Estructura de los datos</h3>
+        <p><code>data/programas.json</code>: un objeto por producto.</p>
+        <ul class="campos-json">
+          <li><code>slug</code>, <code>nombre</code>, <code>entidad</code>, <code>categoria</code> (<code>publico</code>, <code>preferencial</code>, <code>privado</code>, <code>subsidio</code>)</li>
+          <li><code>tasaNominal</code>, <code>tasaEfectiva</code>, <code>plazoMinAnios</code>, <code>plazoMaxAnios</code></li>
+          <li><code>financiamientoMaxPct</code>, <code>tramos</code>, <code>montoMinUsd</code>, <code>montoMaxUsd</code></li>
+          <li><code>precioViviendaMaxUsd</code>, <code>ingresoMaxUsd</code>, <code>edadMin</code>, <code>edadMax</code>, <code>ratioCuotaIngreso</code></li>
+          <li><code>requiereAfiliacionIess</code>, <code>aportacionesMinimas</code>, <code>soloPrimeraVivienda</code>, <code>soloViviendaNueva</code></li>
+          <li><code>usos</code>, <code>requisitos</code>, <code>ventajas</code>, <code>desventajas</code></li>
+          <li><code>fuenteUrl</code>, <code>fechaDato</code>, <code>verificado</code></li>
+        </ul>
+        <p><code>data/entidades.json</code>: <code>slug</code>, <code>nombre</code>, <code>tipo</code> (<code>publico</code>, <code>banco</code>, <code>cooperativa</code>, <code>mutualista</code>), <code>sitioUrl</code>, <code>simuladorUrl</code>, <code>coberturaProvincias</code>, <code>fuenteUrl</code>, <code>fechaDato</code>.</p>
+      </article>
+      </div>
+      <div class="dev-col">
+      <article class="dev-b">
+        <h3>Como librería</h3>
+        <pre data-copiar class="cmd"><code>npm install github:Vreinn-Tech/Credito-Hipotecario-Ecuador</code></pre>
+        <pre data-copiar><code><span class="k">import</span> { evaluarPerfil } <span class="k">from</span> <span class="s">'credito-hipotecario-ecuador'</span>;
+
+<span class="k">const</span> resultados = evaluarPerfil({
+  precioVivienda: <span class="n">70000</span>,
+  ingresoMensual: <span class="n">1200</span>,
+  afiliadoIess: <span class="k">true</span>,
+  aportaciones: <span class="n">48</span>,
+});
+
+<span class="c">// De mejor a peor: elegibilidad, score, razones,</span>
+<span class="c">// montoFinanciable, cuotaEstimada, plazo…</span>
+console.log(resultados[<span class="n">0</span>]);</code></pre>
+        <p class="nota">Solo <code>precioVivienda</code> e <code>ingresoMensual</code> son obligatorios; el resto toma valores por defecto conservadores.</p>
+      </article>
+      <article class="dev-b">
+        <h3>Corregir una tasa</h3>
+        <p>Las tasas cambian. Toda corrección necesita la <strong>fuente oficial</strong> y la <strong>fecha del dato</strong>.</p>
+        <ol>
+          <li>¿No programas? Abre un <a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/issues">issue</a> con el producto, el valor correcto, el enlace a la fuente y la fecha.</li>
+          <li>Para un pull request, edita el producto en <code>data/programas.json</code>: <code>tasaNominal</code> y, si cambia, <code>tasaEfectiva</code>.</li>
+          <li>Actualiza <code>fuenteUrl</code> y <code>fechaDato</code> (<code>AAAA-MM-DD</code>). Pon <code>verificado: true</code> solo si el valor se lee tal cual en la fuente oficial.</li>
+          <li>Ejecuta <code>npm run tablas</code>, <code>node scripts/build-docs.mjs</code> y <code>npm test</code>.</li>
+        </ol>
+        <p class="nota">Las reglas completas están en <a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+      </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA final -->
+<section class="cierre" aria-labelledby="cierre-t">
+  <div class="wrap cierre-in">
+    <div>
+      <h2 id="cierre-t">¿Buscas tu crédito, no el código?</h2>
+      <p>En Crédito Hipotecario Ecuador comparas todas las opciones, simulas tu cuota y recibes asesoría gratuita para elegir.</p>
+    </div>
+    <a class="btn btn-lg" href="https://creditohipotecarioecuador.com/?utm_source=github&amp;utm_medium=pages&amp;utm_campaign=open-source">Ir a creditohipotecarioecuador.com <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+</main>
+
+<!-- 7. Pie -->
+<footer class="pie">
+  <div class="wrap pie-in">
+    <div class="pie-marca">
+      <a class="marca" href="https://creditohipotecarioecuador.com/">
+        <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#0f6b4f"/><path d="M20 9 8 19.5h3.6V31h6.6v-7h3.6v7h6.6V19.5H32z" fill="#fff"/><circle cx="30.5" cy="10.5" r="4.5" fill="#f6b73c"/></svg>
+        <span class="marca-txt">Crédito Hipotecario<b>Ecuador</b></span>
+      </a>
+      <p>Un proyecto abierto de <a href="https://creditohipotecarioecuador.com/">creditohipotecarioecuador.com</a>, el comparador de crédito de vivienda de Ecuador.</p>
+    </div>
+    <nav aria-label="En el sitio">
+      <h3>En el sitio</h3>
+      <ul>
+        <li><a href="https://creditohipotecarioecuador.com/comparador/">Comparador de tasas</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/simulador/">Simulador de cuota</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/evaluacion/">¿A qué crédito califico?</a></li>
+        <li><a href="https://creditohipotecarioecuador.com/guias/">Guías</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Proyecto">
+      <h3>Proyecto</h3>
+      <ul>
+        <li><a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador">Repositorio en GitHub</a></li>
+        <li><a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/blob/main/docs/mcp.md">Guía del servidor MCP</a></li>
+        <li><a href="https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/issues">Reportar un dato</a></li>
+      </ul>
+    </nav>
+    <div class="pie-legal">
+      <h3>Licencias y aviso</h3>
+      <p>Código bajo licencia <a href="https://opensource.org/licenses/MIT">MIT</a>. Datos bajo <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a>: puedes reutilizarlos citando a <a href="https://creditohipotecarioecuador.com/">creditohipotecarioecuador.com</a>.</p>
+      <p>Información referencial, con fecha en cada dato. No es una oferta de crédito ni asesoría financiera. Verifica siempre las condiciones con cada entidad.</p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="assets/app.js"></script>
+</body>
+</html>

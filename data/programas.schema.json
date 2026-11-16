@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/main/data/programas.schema.json",
+  "title": "Productos de crédito de vivienda y subsidios en Ecuador",
+  "description": "Esquema de data/programas.json. Montos en USD, tasas en % anual, plazos en años. Diccionario completo en data/README.md.",
+  "type": "array",
+  "minItems": 1,
+  "items": { "$ref": "#/$defs/programa" },
+  "$defs": {
+    "uso": {
+      "type": "string",
+      "enum": ["vivienda_terminada", "construccion", "terreno", "remodelacion", "sustitucion", "vis_vip"]
+    },
+    "numeroONulo": { "type": ["number", "null"], "minimum": 0 },
+    "porcentajeONulo": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+    "textos": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "fecha": {
+      "description": "Fecha AAAA-MM-DD: publicación o vigencia de la fuente o, si no la indica, día de la consulta.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+    },
+    "programa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slug", "nombre", "entidad", "categoria", "resumen", "descripcion", "paraQuien", "usos",
+        "tasaNominal", "tasaEfectiva", "plazoMinAnios", "plazoMaxAnios", "financiamientoMaxPct", "entradaMinPct",
+        "montoMinUsd", "montoMaxUsd", "precioViviendaMaxUsd", "requiereAfiliacionIess", "edadMin", "edadMax",
+        "ratioCuotaIngreso", "soloPrimeraVivienda", "requisitos", "ventajas", "desventajas",
+        "fuenteUrl", "fechaDato", "verificado"
+      ],
+      "properties": {
+        "slug": { "description": "Identificador único y estable.", "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "nombre": { "type": "string", "minLength": 1 },
+        "entidad": { "description": "Slug de la entidad en entidades.json.", "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "categoria": { "type": "string", "enum": ["publico", "preferencial", "privado", "subsidio"] },
+        "resumen": { "type": "string", "minLength": 1 },
+        "descripcion": { "type": "string", "minLength": 1 },
+        "paraQuien": { "type": "string", "minLength": 1 },
+        "usos": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/uso" } },
+        "tasaNominal": { "description": "Tasa nominal anual en %. null si no aplica (subsidios).", "$ref": "#/$defs/porcentajeONulo" },
+        "tasaEfectiva": { "description": "Tasa efectiva anual en %.", "$ref": "#/$defs/porcentajeONulo" },
+        "tasaNota": { "type": "string" },
+        "plazoMinAnios": { "$ref": "#/$defs/numeroONulo" },
+        "plazoMaxAnios": { "$ref": "#/$defs/numeroONulo" },
+        "financiamientoMaxPct": { "description": "% máximo del avalúo o precio que se financia.", "$ref": "#/$defs/porcentajeONulo" },
+        "entradaMinPct": { "$ref": "#/$defs/porcentajeONulo" },
+        "montoMinUsd": { "$ref": "#/$defs/numeroONulo" },
+        "montoMaxUsd": { "$ref": "#/$defs/numeroONulo" },
+        "precioViviendaMaxUsd": { "$ref": "#/$defs/numeroONulo" },
+        "precioViviendaMinUsd": { "type": "number", "minimum": 0 },
+        "ingresoMaxUsd": { "description": "Tope de ingresos familiares mensuales, USD.", "type": "number", "minimum": 0 },
+        "tramos": {
+          "description": "% de financiamiento según el valor del inmueble, en orden ascendente de hastaUsd.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["hastaUsd", "pct"],
+            "properties": {
+              "hastaUsd": { "type": "number", "minimum": 0 },
+              "pct": { "type": "number", "minimum": 0, "maximum": 100 }
+            }
+          }
+        },
+        "requiereAfiliacionIess": { "type": "boolean" },
+        "aportacionesMinimas": { "description": "Meses de aportación al IESS.", "type": "integer", "minimum": 0 },
+        "edadMin": { "type": ["integer", "null"], "minimum": 0 },
+        "edadMax": { "description": "Edad máxima al terminar de pagar.", "type": ["integer", "null"], "minimum": 0 },
+        "ratioCuotaIngreso": { "description": "Relación máxima cuota/ingreso disponible (0.35 = 35 %).", "type": "number", "minimum": 0, "maximum": 1 },
+        "soloPrimeraVivienda": { "type": "boolean" },
+        "soloViviendaNueva": { "type": "boolean" },
+        "requisitos": { "$ref": "#/$defs/textos" },
+        "ventajas": { "$ref": "#/$defs/textos" },
+        "desventajas": { "$ref": "#/$defs/textos" },
+        "pasos": { "$ref": "#/$defs/textos" },
+        "fuenteUrl": { "description": "Página oficial de donde sale el dato.", "type": "string", "pattern": "^https://" },
+        "fechaDato": { "$ref": "#/$defs/fecha" },
+        "verificado": { "description": "false = dato preliminar, sin confirmar en la fuente oficial.", "type": "boolean" }
+      }
+    }
+  }
+}

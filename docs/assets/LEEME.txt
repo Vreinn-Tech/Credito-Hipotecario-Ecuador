@@ -1,0 +1,2 @@
+evaluacion.js, finanzas.js, programas.json y entidades.json son COPIAS GENERADAS por scripts/build-docs.mjs
+a partir de src/ y data/. No las edites aquí: cambia los originales y ejecuta `node scripts/build-docs.mjs`.

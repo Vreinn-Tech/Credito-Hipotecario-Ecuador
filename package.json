@@ -1,0 +1,70 @@
+{
+  "name": "credito-hipotecario-ecuador",
+  "version": "0.1.0",
+  "description": "Evaluador de elegibilidad, simulador de cuotas y datos abiertos de crédito hipotecario en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas). Librería, CLI y servidor MCP sin dependencias.",
+  "keywords": [
+    "ecuador",
+    "credito-hipotecario",
+    "hipoteca",
+    "vivienda",
+    "biess",
+    "vis",
+    "vip",
+    "simulador",
+    "amortizacion",
+    "datos-abiertos",
+    "mortgage",
+    "mcp"
+  ],
+  "type": "module",
+  "license": "MIT",
+  "author": "Crédito Hipotecario Ecuador (https://creditohipotecarioecuador.com)",
+  "homepage": "https://creditohipotecarioecuador.com",
+  "repository": "github:Vreinn-Tech/Credito-Hipotecario-Ecuador",
+  "bugs": "https://github.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/issues",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./src/index.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./evaluacion": {
+      "types": "./types/evaluacion.d.ts",
+      "default": "./src/evaluacion.js"
+    },
+    "./finanzas": {
+      "types": "./types/finanzas.d.ts",
+      "default": "./src/finanzas.js"
+    },
+    "./mcp": "./src/mcp/index.js",
+    "./data/programas.json": "./data/programas.json",
+    "./data/entidades.json": "./data/entidades.json",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "credito-hipotecario-ecuador": "bin/cli.js",
+    "credito-hipotecario-ecuador-mcp": "bin/mcp.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "types",
+    "data",
+    "docs/mcp.md",
+    "docs/claude.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "LICENSE-DATA.md"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "tablas": "node scripts/generar-tablas.mjs",
+    "skill": "node scripts/empaquetar-skill.mjs",
+    "docs": "node scripts/build-docs.mjs"
+  }
+}

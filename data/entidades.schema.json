@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Vreinn-Tech/Credito-Hipotecario-Ecuador/main/data/entidades.schema.json",
+  "title": "Entidades que ofrecen crédito de vivienda en Ecuador",
+  "description": "Esquema de data/entidades.json. Diccionario completo en data/README.md.",
+  "type": "array",
+  "minItems": 1,
+  "items": { "$ref": "#/$defs/entidad" },
+  "$defs": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "url": { "type": "string", "pattern": "^https://" },
+    "entidad": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["slug", "nombre", "tipo", "descripcion", "coberturaProvincias"],
+      "properties": {
+        "slug": { "description": "Identificador único y estable.", "$ref": "#/$defs/slug" },
+        "nombre": { "type": "string", "minLength": 1 },
+        "tipo": { "type": "string", "enum": ["publico", "banco", "cooperativa", "mutualista"] },
+        "descripcion": { "type": "string", "minLength": 1 },
+        "sitioUrl": { "$ref": "#/$defs/url" },
+        "simuladorUrl": { "$ref": "#/$defs/url" },
+        "coberturaProvincias": {
+          "description": "\"nacional\" o lista de slugs de provincia. Lista vacía = cobertura no confirmada.",
+          "oneOf": [
+            { "const": "nacional" },
+            { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/slug" } }
+          ]
+        },
+        "fuenteUrl": { "$ref": "#/$defs/url" },
+        "fechaDato": {
+          "description": "Fecha AAAA-MM-DD. Se omite cuando no se pudo confirmar.",
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$"
+        },
+        "miti": { "description": "Entidad aliada del programa Tu Casa Miti-Miti.", "type": "boolean" }
+      }
+    }
+  }
+}

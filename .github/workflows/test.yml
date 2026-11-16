@@ -1,0 +1,38 @@
+name: Pruebas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      # El paquete no tiene dependencias de runtime; solo se instala si alguien añade devDependencies.
+      - name: Instalar dependencias (si las hay)
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          elif node -e "const p=require('./package.json');process.exit(Object.keys({...p.dependencies,...p.devDependencies}).length?0:1)"; then
+            npm install
+          else
+            echo "Sin dependencias: no hay nada que instalar."
+          fi
+      - run: npm test
+      - name: Tablas de la documentación al día
+        run: node scripts/generar-tablas.mjs --check
+      - name: Humo de la CLI
+        run: node bin/cli.js evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48

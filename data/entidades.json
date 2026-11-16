@@ -1,0 +1,516 @@
+[
+ {
+  "slug": "biess",
+  "nombre": "BIESS (Banco del IESS)",
+  "tipo": "publico",
+  "descripcion": "Banco del Instituto Ecuatoriano de Seguridad Social. Concentra cerca del 60 % de la cartera de vivienda del país; presta a afiliados y jubilados del IESS.",
+  "sitioUrl": "https://www.biess.fin.ec",
+  "simuladorUrl": "https://www.biess.fin.ec/hipotecarios",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.biess.fin.ec/hipotecarios",
+  "fechaDato": "2026-11-16"
+ },
+ {
+  "slug": "mit",
+  "nombre": "MIT (Ministerio de Infraestructura y Tecnología, ex MIDUVI)",
+  "tipo": "publico",
+  "descripcion": "Ente rector de la política de vivienda desde la fusión del MIDUVI (2025). Administra los subsidios 'Casa Ecuador' (Casa 100, Yapa Pa' Tu Casa) y registra los proyectos VIS/VIP del programa Tu Casa Miti-Miti.",
+  "sitioUrl": "https://www.mit.gob.ec/miti-miti/",
+  "simuladorUrl": "https://plan-vivienda.mit.gob.ec/",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.mit.gob.ec/miti-miti/",
+  "fechaDato": "2026-11-16"
+ },
+ {
+  "slug": "banco-pichincha",
+  "nombre": "Banco Pichincha",
+  "tipo": "banco",
+  "descripcion": "Banco privado; entidad aliada del programa Tu Casa Miti-Miti (VIS/VIP).",
+  "sitioUrl": "https://www.pichincha.com",
+  "simuladorUrl": "https://www.pichincha.com/detalle-producto/simulador-de-credito",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.pichincha.com/sites/default/files/documents/2026-07/TARIFARIO%20WEB%20AGOSTO%202026.pdf",
+  "fechaDato": "2026-08-01",
+  "miti": true
+ },
+ {
+  "slug": "banco-guayaquil",
+  "nombre": "Banco Guayaquil",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.bancoguayaquil.com",
+  "simuladorUrl": "https://www.bancoguayaquil.com",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://ayuda.bancoguayaquil.com/hc/es/articles/360044729071",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "produbanco",
+  "nombre": "Produbanco",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.produbanco.com.ec",
+  "simuladorUrl": "https://www.produbanco.com.ec/banca-personas/creditos/hipotecario/simulador-de-credito-hipotecario/",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.produbanco.com.ec/banca-personas/creditos/hipotecario/",
+  "fechaDato": "2026-04-01",
+  "miti": false
+ },
+ {
+  "slug": "banco-pacifico",
+  "nombre": "Banco del Pacífico",
+  "tipo": "banco",
+  "descripcion": "Banco privado; entidad aliada del programa Tu Casa Miti-Miti (VIS/VIP).",
+  "sitioUrl": "https://www.bancodelpacifico.com",
+  "simuladorUrl": "https://www.aplicacionesbp.com.ec:4443/simulador-credito-web/faces/Segmento-Credito",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.bancodelpacifico.com/BancoPacifico/media/pdf/TranspInformacion/2026/Operaciones_Credito.pdf",
+  "fechaDato": "2026-10-01",
+  "miti": true
+ },
+ {
+  "slug": "banco-bolivariano",
+  "nombre": "Banco Bolivariano",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.bolivariano.com",
+  "simuladorUrl": "https://www.bolivariano.com/personas/mas-servicios/simuladores/credimax-vivienda",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.bolivariano.com/personas/creditos/credimax-hipotecario/compra-de-vivienda",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "banco-internacional",
+  "nombre": "Banco Internacional",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.bancointernacional.com.ec",
+  "simuladorUrl": "https://www.bancointernacional.com.ec/producto/credito-hipotecario/#simuladores",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.bancointernacional.com.ec/info-tarifarios/interes-credito",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "banco-austro",
+  "nombre": "Banco del Austro",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.bancodelaustro.com",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.bancodelaustro.com/principal/banca-personas/creditos/vivienda/caracteristicas",
+  "miti": false
+ },
+ {
+  "slug": "banco-machala",
+  "nombre": "Banco de Machala",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.bancomachala.com",
+  "simuladorUrl": "https://www.bancomachala.com/banca-personas/simuladores/casa-credit",
+  "coberturaProvincias": [
+   "el-oro",
+   "guayas"
+  ],
+  "fuenteUrl": "https://www.bancomachala.com/banca-personas/creditos/casa-credit",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "banco-solidario",
+  "nombre": "Banco Solidario",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.banco-solidario.com",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.banco-solidario.com/",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "banco-procredit",
+  "nombre": "Banco ProCredit",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.bancoprocredit.com.ec",
+  "coberturaProvincias": [
+   "pichincha"
+  ],
+  "fuenteUrl": "https://www.bancoprocredit.com.ec/wp-content/uploads/2026/11/Tarifario_noviembre_2026.pdf",
+  "fechaDato": "2026-11-01",
+  "miti": false
+ },
+ {
+  "slug": "bgr",
+  "nombre": "Banco General Rumiñahui",
+  "tipo": "banco",
+  "descripcion": "Banco privado; entidad aliada del programa Tu Casa Miti-Miti (VIS/VIP).",
+  "sitioUrl": "https://www.bgr.com.ec",
+  "simuladorUrl": "https://www.bgr.com.ec/simulador-de-creditos",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.bgr.com.ec/bgr-tu-casa",
+  "fechaDato": "2026-10-31",
+  "miti": true
+ },
+ {
+  "slug": "banco-loja",
+  "nombre": "Banco de Loja",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.bancodeloja.fin.ec",
+  "coberturaProvincias": [
+   "loja",
+   "zamora-chinchipe",
+   "el-oro"
+  ],
+  "fuenteUrl": "https://www.bancodeloja.fin.ec/principal/personas/creditos/vivienda-de-interes-publico",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "banco-amazonas",
+  "nombre": "Banco Amazonas",
+  "tipo": "banco",
+  "descripcion": "Banco privado.",
+  "sitioUrl": "https://www.bancoamazonas.com",
+  "coberturaProvincias": [
+   "guayas",
+   "pichincha"
+  ],
+  "fuenteUrl": "https://www.bancoamazonas.com/contacto/",
+  "fechaDato": "2026-11-16",
+  "miti": false
+ },
+ {
+  "slug": "mutualista-pichincha",
+  "nombre": "Mutualista Pichincha",
+  "tipo": "mutualista",
+  "descripcion": "Mutualista de ahorro y crédito para la vivienda; entidad aliada del programa Tu Casa Miti-Miti (VIS/VIP).",
+  "sitioUrl": "https://www.mutualistapichincha.com",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.vistazo.com/patrocinado/2026-04-08-pasos-requisitos-credito-miti-casa-propia-puede-convertirse-realidad-BN10846034",
+  "fechaDato": "2026-04-08",
+  "miti": true
+ },
+ {
+  "slug": "mutualista-azuay",
+  "nombre": "Mutualista Azuay",
+  "tipo": "mutualista",
+  "descripcion": "Mutualista de ahorro y crédito para la vivienda; entidad aliada del programa Tu Casa Miti-Miti (VIS/VIP).",
+  "sitioUrl": "https://www.mutualistaazuay.com",
+  "simuladorUrl": "https://www.mutualistaazuay.com/simulador-de-credito",
+  "coberturaProvincias": [
+   "azuay"
+  ],
+  "fuenteUrl": "https://www.mutualistaazuay.com/credito-casa-nueva",
+  "fechaDato": "2026-10-31",
+  "miti": true
+ },
+ {
+  "slug": "mutualista-imbabura",
+  "nombre": "Mutualista Imbabura",
+  "tipo": "mutualista",
+  "descripcion": "Mutualista de ahorro y crédito para la vivienda.",
+  "sitioUrl": "https://www.mutualistaimbabura.com",
+  "coberturaProvincias": [
+   "imbabura",
+   "pichincha"
+  ],
+  "fuenteUrl": "https://www.mutualistaimbabura.com/oficinas/",
+  "fechaDato": "2026-11-16",
+  "miti": false
+ },
+ {
+  "slug": "mutualista-ambato",
+  "nombre": "Mutualista Ambato",
+  "tipo": "mutualista",
+  "descripcion": "Mutualista de ahorro y crédito para la vivienda.",
+  "sitioUrl": "https://www.mutualistaambato.fin.ec",
+  "coberturaProvincias": [
+   "tungurahua"
+  ],
+  "fuenteUrl": "https://www.mutualistaambato.fin.ec/?page_id=1603",
+  "fechaDato": "2026-11-16",
+  "miti": false
+ },
+ {
+  "slug": "jep",
+  "nombre": "Cooperativa JEP",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.jep.coop",
+  "simuladorUrl": "https://www.jep.coop/productos-servicios/creditos/simulador-de-credito",
+  "coberturaProvincias": [
+   "azuay",
+   "canar",
+   "guayas",
+   "el-oro",
+   "loja",
+   "morona-santiago",
+   "pichincha"
+  ],
+  "fuenteUrl": "https://www.jep.coop/documents/20182/0/CostosFinancierosSeptiembre2026.pdf",
+  "fechaDato": "2026-09-01",
+  "miti": false
+ },
+ {
+  "slug": "jardin-azuayo",
+  "nombre": "Cooperativa Jardín Azuayo",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.jardinazuayo.fin.ec",
+  "simuladorUrl": "https://calculadora.jardinazuayo.fin.ec/",
+  "coberturaProvincias": [
+   "azuay",
+   "canar",
+   "morona-santiago",
+   "el-oro",
+   "loja"
+  ],
+  "fuenteUrl": "https://www.jardinazuayo.fin.ec/credito-de-vivienda/",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "29-de-octubre",
+  "nombre": "Cooperativa 29 de Octubre",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.29deoctubre.fin.ec",
+  "simuladorUrl": "https://www.29deoctubre.fin.ec/creditos/mi-casa-29",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.29deoctubre.fin.ec/creditos/mi-casa-29",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "cooprogreso",
+  "nombre": "Cooprogreso",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.cooprogreso.fin.ec",
+  "coberturaProvincias": [
+   "pichincha"
+  ],
+  "fuenteUrl": "https://www.cooprogreso.fin.ec/creditos",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "alianza-del-valle",
+  "nombre": "Cooperativa Alianza del Valle",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.alianzadelvalle.fin.ec",
+  "simuladorUrl": "https://www.alianzadelvalle.fin.ec/creditos#simulador-credito",
+  "coberturaProvincias": [
+   "pichincha"
+  ],
+  "fuenteUrl": "https://www.alianzadelvalle.fin.ec/ponte-en-contacto/",
+  "fechaDato": "2026-11-16",
+  "miti": false
+ },
+ {
+  "slug": "cpn",
+  "nombre": "Cooperativa Policía Nacional",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.cpn.fin.ec",
+  "simuladorUrl": "https://www.cpn.fin.ec/creditos/mi-vivienda#513",
+  "coberturaProvincias": "nacional",
+  "fuenteUrl": "https://www.cpn.fin.ec/creditos/mi-vivienda",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "oscus",
+  "nombre": "Cooperativa Oscus",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.oscus.coop",
+  "simuladorUrl": "https://www.oscus.coop/simulador-credito",
+  "coberturaProvincias": [
+   "tungurahua"
+  ],
+  "fuenteUrl": "https://cooperativasecuador.net/cooperativa-oscus-simulador/",
+  "fechaDato": "2026-10-02",
+  "miti": false
+ },
+ {
+  "slug": "san-francisco",
+  "nombre": "Cooperativa San Francisco (SanFra)",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://coac-sanfra.com",
+  "coberturaProvincias": [
+   "tungurahua"
+  ],
+  "fuenteUrl": "https://coac-sanfra.com/",
+  "miti": false
+ },
+ {
+  "slug": "cacpeco",
+  "nombre": "CACPECO",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.cacpeco.com",
+  "coberturaProvincias": [
+   "cotopaxi"
+  ],
+  "fuenteUrl": "https://www.cacpeco.com/creditos/",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "andalucia",
+  "nombre": "Cooperativa Andalucía",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://andalucia.fin.ec",
+  "coberturaProvincias": [
+   "pichincha"
+  ],
+  "fuenteUrl": "https://cooperativasecuador.net/cooperativa-andalucia-requisitos-para-prestamos/",
+  "fechaDato": "2026-10-03",
+  "miti": false
+ },
+ {
+  "slug": "mushuc-runa",
+  "nombre": "Cooperativa Mushuc Runa",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://mushucruna.com",
+  "simuladorUrl": "https://www.simulador.mushucruna.com/",
+  "coberturaProvincias": [
+   "tungurahua"
+  ],
+  "fuenteUrl": "https://mushucruna.com/creditos/",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "riobamba",
+  "nombre": "Cooperativa Riobamba",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.cooprio.fin.ec",
+  "coberturaProvincias": [
+   "chimborazo",
+   "pichincha",
+   "azuay"
+  ],
+  "fuenteUrl": "https://www.cooprio.fin.ec/?page_id=563",
+  "fechaDato": "2026-11-16",
+  "miti": false
+ },
+ {
+  "slug": "atuntaqui",
+  "nombre": "Cooperativa Atuntaqui",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1); entidad aliada del programa Tu Casa Miti-Miti (VIS/VIP).",
+  "sitioUrl": "https://www.atuntaqui.fin.ec",
+  "coberturaProvincias": [
+   "imbabura",
+   "pichincha",
+   "carchi"
+  ],
+  "fuenteUrl": "https://www.atuntaqui.fin.ec/credito-de-vivienda/",
+  "fechaDato": "2026-10-31",
+  "miti": true
+ },
+ {
+  "slug": "el-sagrario",
+  "nombre": "Cooperativa El Sagrario",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://cooperativaelsagrario.com",
+  "coberturaProvincias": [
+   "tungurahua",
+   "cotopaxi"
+  ],
+  "miti": false
+ },
+ {
+  "slug": "tulcan",
+  "nombre": "Cooperativa Tulcán",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.cooptulcan.fin.ec",
+  "coberturaProvincias": [
+   "carchi",
+   "imbabura",
+   "pichincha"
+  ],
+  "fuenteUrl": "https://www.cooptulcan.fin.ec/credi-vivienda/",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "pablo-munoz-vega",
+  "nombre": "Cooperativa Pablo Muñoz Vega",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.cpmv.fin.ec",
+  "simuladorUrl": "https://www.cpmv.fin.ec/simulador/",
+  "coberturaProvincias": [
+   "carchi",
+   "imbabura",
+   "pichincha"
+  ],
+  "fuenteUrl": "https://www.cpmv.fin.ec/documentos/transparencia/tarifario-2026-10-octubre.pdf",
+  "fechaDato": "2026-10-01",
+  "miti": false
+ },
+ {
+  "slug": "santa-rosa",
+  "nombre": "Cooperativa Santa Rosa",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.coopsantarosa.fin.ec",
+  "coberturaProvincias": [
+   "el-oro"
+  ],
+  "miti": false
+ },
+ {
+  "slug": "mego",
+  "nombre": "Cooperativa Vicentina Manuel Esteban Godoy (Mego)",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://mego.com.ec",
+  "simuladorUrl": "https://mego.com.ec/simulador",
+  "coberturaProvincias": [
+   "loja",
+   "zamora-chinchipe"
+  ],
+  "fuenteUrl": "https://mego.com.ec/",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ },
+ {
+  "slug": "cacpe-biblian",
+  "nombre": "CACPE Biblián",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.cacpebiblian.fin.ec",
+  "coberturaProvincias": [
+   "canar"
+  ],
+  "miti": false
+ },
+ {
+  "slug": "cacpe-pastaza",
+  "nombre": "CACPE Pastaza",
+  "tipo": "cooperativa",
+  "descripcion": "Cooperativa de ahorro y crédito (SEPS, segmento 1).",
+  "sitioUrl": "https://www.cacpepas.fin.ec",
+  "coberturaProvincias": [
+   "pastaza"
+  ],
+  "fuenteUrl": "https://www.cacpepas.fin.ec/creditos/credito-inmobiliario",
+  "fechaDato": "2026-10-31",
+  "miti": false
+ }
+]
