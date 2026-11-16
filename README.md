@@ -33,21 +33,21 @@ No necesitas instalar nada. Las herramientas para el público están en el sitio
 Necesitas [Node.js](https://nodejs.org) 18 o superior. Sin instalar nada:
 
 ```bash
-npx github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48
+npx github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48 --nueva
 ```
 
 ```text
 Perfil evaluado
-  Vivienda: $70.000 · compra de vivienda terminada
+  Vivienda: $70.000 · compra de vivienda terminada · nueva
   Entrada disponible: $5.000 · Ingreso: $1.200/mes · Otras deudas: $0/mes
   IESS: afiliado, 48 aportaciones · Edad: 35 · Plazo deseado: 20 años
   Primera vivienda: sí · Relación laboral: dependiente
 
-Resultado: 2 apto(s), 16 condicional(es) y 8 no apto(s) de 26 productos.
+Resultado: 2 apto(s), 17 condicional(es) y 7 no apto(s) de 26 productos.
 
  #  Producto                                Entidad                     Resultado    Puntaje      Tasa    Plazo    Monto  Cuota/mes  Entrada mín.
 ──  ──────────────────────────────────────  ──────────────────────────  ───────────  ───────  ────────  ───────  ───────  ─────────  ────────────
- 1  BIESS · CrediCasa 2,99 %                BIESS (Banco del IESS)      Apto              91    2,99 %  20 años  $65.000       $360            $0
+ 1  BIESS · CrediCasa 2,99 %                BIESS (Banco del IESS)      Apto              91    2,99 %  20 años  $65.000       $360        $5.000
  2  Tu Casa Miti-Miti · VIS (Vivienda de …  MIT (Ministerio de Infrae…  Apto              81    4,88 %  20 años  $65.000       $425        $3.500
  3  BIESS · Vivienda terminada (nueva o u…  BIESS (Banco del IESS)      Condicional       59    6,80 %  20 años  $65.000       $496        $3.500
  …
@@ -60,7 +60,7 @@ Observaciones
 Más detalle y asesoría gratuita: https://creditohipotecarioecuador.com/evaluacion/
 ```
 
-(Salida con los datos de la versión 0.1.0; cambia cuando se actualizan las tasas.)
+(Salida con los datos de la versión 0.1.1; cambia cuando se actualizan las tasas. CrediCasa financia el 100 % pero hasta 65.000 USD, así que con una vivienda de 70.000 USD la entrada mínima son 5.000 USD. Sin `--nueva`, los productos que solo financian vivienda nueva de primer uso salen «condicional» hasta que lo confirmes; con `--usada`, «no apto».)
 
 ### Comandos
 
@@ -116,6 +116,7 @@ const resultados = evaluarPerfil({
   afiliadoIess: true,
   aportaciones: 48,
   plazoDeseado: 30,
+  viviendaNueva: true, // CrediCasa solo financia vivienda nueva; si lo omites, queda «condicional»
 });
 
 const mejor = resultados[0];
@@ -176,7 +177,7 @@ Basta una para descartar el producto, y el puntaje queda en 0:
 2. El producto exige afiliación al IESS y no eres afiliado.
 3. El producto exige afiliación y tienes menos aportaciones que `aportacionesMinimas`.
 4. Es solo para primera vivienda y ya tienes una.
-5. Es solo para vivienda nueva y la tuya es usada. Si no indicas si es nueva o usada, esta regla no bloquea.
+5. Es solo para vivienda nueva y la tuya es usada (`viviendaNueva: false`). Si no indicas si es nueva o usada, no bloquea, pero queda «condicional» (ver abajo).
 6. El precio de la vivienda supera `precioViviendaMaxUsd`.
 7. El precio está por debajo de `precioViviendaMinUsd` (segmento VIP).
 8. Tu ingreso mensual supera `ingresoMaxUsd`.
@@ -188,9 +189,10 @@ Basta una para descartar el producto, y el puntaje queda en 0:
 
 Calificas, pero con un ajuste o un requisito adicional:
 
+- **Vivienda nueva sin confirmar**: el producto es solo para vivienda nueva de primer uso (`soloViviendaNueva`) y no indicaste si la tuya lo es.
+- **Plazo bajo el mínimo**: pediste menos años que `plazoMinAnios`; la cuota se calcula con el plazo mínimo del producto.
 - **Plazo recortado por edad**: si `edadMax − edad` es menor que el plazo que pediste, el plazo se reduce a ese valor.
-- **Entrada insuficiente**: tu entrada disponible es menor que la entrada mínima del producto.
-- **Monto máximo**: lo que necesitas supera `montoMaxUsd`; el monto se recorta a ese tope y tendrías que cubrir la diferencia.
+- **Entrada insuficiente**: tu entrada disponible es menor que la entrada requerida. Si lo que limita es el porcentaje financiable, el mensaje da el porcentaje; si lo que limita es `montoMaxUsd`, da el monto máximo y la entrada necesaria para cubrir la diferencia.
 - **Monto mínimo**: lo que necesitas es menor que `montoMinUsd`.
 - **Cuota ajustada**: la cuota supera el límite cuota/ingreso del producto, pero por no más de un 40 %.
 - **Independiente**: tendrás que justificar ingresos (RUC, declaraciones, movimientos bancarios).
@@ -200,14 +202,15 @@ Si no se activa ninguna regla, el resultado es **apto**. Un bloqueo siempre prev
 
 ### Cómo se calculan el monto y la cuota
 
-1. **Plazo**: el menor entre el que pides y `plazoMaxAnios` (25 si el producto no lo indica), recortado por edad si hace falta.
+1. **Plazo**: el menor entre el que pides y `plazoMaxAnios` (25 si el producto no lo indica); si queda por debajo de `plazoMinAnios`, sube a ese mínimo; después se recorta por edad si hace falta (nunca por debajo del mínimo: en ese caso el producto se bloquea).
 2. **Porcentaje financiable**: si el producto tiene `tramos`, el del primer tramo cuyo `hastaUsd` sea igual o mayor que el precio; si no, `financiamientoMaxPct` (80 % si no está publicado).
-3. **Entrada requerida** = precio − precio × porcentaje financiable.
-4. **Monto financiable** = el menor entre lo que necesitas (precio − tu entrada) y lo que el producto financia (precio × porcentaje), con el tope de `montoMaxUsd`.
-5. **Cuota estimada**: sistema francés con `tasaNominal` (10 % si el producto no publica tasa).
-6. **Ingreso disponible** = ingreso mensual − otras deudas (nunca menor que 0).
-7. **Relación cuota/ingreso** = cuota ÷ ingreso disponible (se toma 1 si el ingreso disponible es 0).
-8. **Capacidad máxima**: el crédito más alto cuya cuota cabe en `ingreso disponible × ratioCuotaIngreso`, a esa tasa y plazo.
+3. **Tope** = el menor entre precio × porcentaje financiable y `montoMaxUsd` (sin límite si el producto no lo publica).
+4. **Entrada requerida** = precio − tope (nunca menor que 0).
+5. **Monto financiable** = el menor entre lo que necesitas (precio − tu entrada) y el tope.
+6. **Cuota estimada**: sistema francés con `tasaNominal` (10 % si el producto no publica tasa).
+7. **Ingreso disponible** = ingreso mensual − otras deudas (nunca menor que 0).
+8. **Relación cuota/ingreso** = cuota ÷ ingreso disponible (se toma 1 si el ingreso disponible es 0).
+9. **Capacidad máxima**: el crédito más alto cuya cuota cabe en `ingreso disponible × ratioCuotaIngreso`, a esa tasa y plazo.
 
 ### Sistema francés
 
@@ -360,7 +363,7 @@ npm run tablas      # regenera las tablas de la documentación tras cambiar los 
 Open-source eligibility engine, mortgage payment calculator and open dataset for **home loans in Ecuador** (BIESS, subsidised VIS/VIP programmes, banks, credit unions and mutual associations). It is the engine behind [creditohipotecarioecuador.com](https://creditohipotecarioecuador.com), packaged as a zero-dependency JavaScript library, a CLI and an MCP server.
 
 ```bash
-npx github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48
+npx github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48 --nueva
 ```
 
 Given a home price, household income and a few other inputs, it classifies each of the 26 loan products as eligible (`apto`), conditionally eligible (`condicional`) or not eligible (`no_apto`), explains why, and estimates the loan amount, monthly payment and down payment. Output, field names and documentation are in Spanish. The dataset is documented in [`data/README.md`](data/README.md).

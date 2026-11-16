@@ -31,7 +31,10 @@ export function evaluarPrograma(p, u) {
     bloquea(`Requiere al menos ${p.aportacionesMinimas} aportaciones al IESS (tienes ${u.aportaciones}).`);
   }
   if (p.soloPrimeraVivienda && !u.primeraVivienda) bloquea('Solo aplica para primera vivienda.');
-  if (p.soloViviendaNueva && u.viviendaNueva === false) bloquea('Solo financia vivienda nueva de primer uso.');
+  if (p.soloViviendaNueva) {
+    if (u.viviendaNueva === false) bloquea('Solo financia vivienda nueva de primer uso.');
+    else if (u.viviendaNueva !== true) condiciona('Solo financia vivienda nueva de primer uso: confirma que la vivienda lo es.');
+  }
   if (p.precioViviendaMaxUsd && u.precioVivienda > p.precioViviendaMaxUsd) {
     bloquea(`El precio de la vivienda supera el tope del programa (${usd(p.precioViviendaMaxUsd)} USD).`);
   }
@@ -45,6 +48,10 @@ export function evaluarPrograma(p, u) {
 
   const plazoMax = p.plazoMaxAnios ?? 25;
   let plazo = Math.min(u.plazoDeseado, plazoMax);
+  if (p.plazoMinAnios && plazo < p.plazoMinAnios) {
+    plazo = p.plazoMinAnios;
+    condiciona(`El plazo mínimo del producto es de ${p.plazoMinAnios} años; la cuota se calcula a ${p.plazoMinAnios} años.`);
+  }
   if (p.edadMax) {
     const plazoPorEdad = p.edadMax - u.edad;
     if (plazoPorEdad < (p.plazoMinAnios ?? 3)) bloquea(`Por edad, el plazo disponible sería menor al mínimo (edad máxima al terminar: ${p.edadMax}).`);
@@ -54,16 +61,18 @@ export function evaluarPrograma(p, u) {
   const tramo = p.tramos?.find((t) => u.precioVivienda <= t.hastaUsd);
   const finPct = (tramo?.pct ?? p.financiamientoMaxPct ?? 80) / 100;
   const montoMaxPorValor = u.precioVivienda * finPct;
-  const entradaRequerida = Math.max(0, u.precioVivienda - montoMaxPorValor);
+  const topeProducto = p.montoMaxUsd ?? Infinity;
+  const tope = Math.min(montoMaxPorValor, topeProducto);
+  const entradaRequerida = Math.max(0, u.precioVivienda - tope);
   const montoNecesario = Math.max(0, u.precioVivienda - u.entradaDisponible);
   if (u.entradaDisponible < entradaRequerida) {
-    condiciona(`Necesitas una entrada mínima del ${Math.round((1 - finPct) * 100)} % (≈ ${usd(entradaRequerida)} USD).`);
+    if (topeProducto < montoMaxPorValor) {
+      condiciona(`El monto máximo del producto es ${topeProducto.toLocaleString('es-EC')} USD: necesitas una entrada de al menos ${usd(entradaRequerida)} USD.`);
+    } else {
+      condiciona(`Necesitas una entrada mínima del ${Math.round((1 - finPct) * 100)} % (≈ ${usd(entradaRequerida)} USD).`);
+    }
   }
-  let montoFinanciable = Math.min(montoNecesario, montoMaxPorValor);
-  if (p.montoMaxUsd && montoFinanciable > p.montoMaxUsd) {
-    montoFinanciable = p.montoMaxUsd;
-    condiciona(`El monto máximo del producto es ${p.montoMaxUsd.toLocaleString('es-EC')} USD; deberías cubrir la diferencia.`);
-  }
+  const montoFinanciable = Math.min(montoNecesario, tope);
   if (p.montoMinUsd && montoNecesario < p.montoMinUsd) condiciona(`El monto mínimo del producto es ${p.montoMinUsd.toLocaleString('es-EC')} USD.`);
 
   const tasa = p.tasaNominal ?? 10;

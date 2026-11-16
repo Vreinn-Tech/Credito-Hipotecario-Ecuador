@@ -29,8 +29,8 @@ const holgado = (extra = {}) => normalizarPerfil({ precioVivienda: 100000, entra
 
 // ---------- CrediCasa (BIESS) ----------
 
-test('afiliado con 48 aportaciones califica a CrediCasa sin observaciones', () => {
-  const r = evaluarPrograma(prog('biess-credicasa'), afiliado({ plazoDeseado: 30 }));
+test('afiliado con 48 aportaciones y vivienda nueva califica a CrediCasa sin observaciones', () => {
+  const r = evaluarPrograma(prog('biess-credicasa'), afiliado({ plazoDeseado: 30, viviendaNueva: true }));
   assert.equal(r.elegibilidad, 'apto');
   assert.deepEqual(r.razones, []);
   assert.equal(r.montoFinanciable, 65000);
@@ -42,7 +42,7 @@ test('afiliado con 48 aportaciones califica a CrediCasa sin observaciones', () =
 });
 
 test('CrediCasa es la mejor opción para ese afiliado', () => {
-  const [mejor] = evaluarPerfil({ precioVivienda: 65000, ingresoMensual: 1200, afiliadoIess: true, aportaciones: 48, plazoDeseado: 30 });
+  const [mejor] = evaluarPerfil({ precioVivienda: 65000, ingresoMensual: 1200, afiliadoIess: true, aportaciones: 48, plazoDeseado: 30, viviendaNueva: true });
   assert.equal(mejor.programa.slug, 'biess-credicasa');
   assert.equal(mejor.elegibilidad, 'apto');
 });
@@ -72,11 +72,22 @@ test('precio sobre el tope del programa: bloqueo', () => {
   incluye(r, 'supera el tope del programa');
 });
 
-test('precio bajo el tope pero sobre el monto máximo: condicional, monto recortado', () => {
-  const r = evaluarPrograma(prog('biess-credicasa'), afiliado({ precioVivienda: 70000, plazoDeseado: 30 }));
-  assert.equal(r.elegibilidad, 'condicional');
-  assert.equal(r.montoFinanciable, 65000);
-  incluye(r, 'El monto máximo del producto es');
+test('precio bajo el tope pero sobre el monto máximo: la entrada requerida cubre la diferencia', () => {
+  const p = prog('biess-credicasa'); // financia 100 % con montoMaxUsd 65.000
+  const sinEntrada = evaluarPrograma(p, afiliado({ precioVivienda: 70000, plazoDeseado: 30, viviendaNueva: true }));
+  assert.equal(sinEntrada.elegibilidad, 'condicional');
+  assert.equal(sinEntrada.entradaRequerida, 5000);
+  assert.equal(sinEntrada.montoFinanciable, 65000);
+  assert.deepEqual(sinEntrada.razones, ['El monto máximo del producto es 65.000 USD: necesitas una entrada de al menos 5.000 USD.']);
+  const conEntrada = evaluarPrograma(p, afiliado({ precioVivienda: 70000, entradaDisponible: 5000, plazoDeseado: 30, viviendaNueva: true }));
+  assert.equal(conEntrada.elegibilidad, 'apto');
+  assert.deepEqual(conEntrada.razones, []);
+  assert.equal(conEntrada.entradaRequerida, 5000);
+  assert.equal(conEntrada.montoFinanciable, 65000);
+  // Con algo de entrada pero menos de la necesaria sigue condicional.
+  const corta = evaluarPrograma(p, afiliado({ precioVivienda: 70000, entradaDisponible: 4999, plazoDeseado: 30, viviendaNueva: true }));
+  assert.equal(corta.elegibilidad, 'condicional');
+  assert.equal(corta.montoFinanciable, 65000);
 });
 
 test('ingreso sobre el tope del programa: bloqueo', () => {
@@ -85,14 +96,25 @@ test('ingreso sobre el tope del programa: bloqueo', () => {
   incluye(r, 'Tus ingresos familiares superan el tope');
 });
 
-test('segunda vivienda y vivienda usada bloquean CrediCasa; sin dato de nueva/usada no bloquea', () => {
+test('segunda vivienda bloquea CrediCasa', () => {
+  incluye(evaluarPrograma(prog('biess-credicasa'), afiliado({ primeraVivienda: false, viviendaNueva: true })), 'Solo aplica para primera vivienda.');
+});
+
+test('solo vivienda nueva: usada bloquea, nueva es apto y sin dato queda condicional', () => {
   const p = prog('biess-credicasa');
-  incluye(evaluarPrograma(p, afiliado({ primeraVivienda: false })), 'Solo aplica para primera vivienda.');
   const usada = evaluarPrograma(p, afiliado({ viviendaNueva: false }));
   assert.equal(usada.elegibilidad, 'no_apto');
-  incluye(usada, 'Solo financia vivienda nueva de primer uso.');
-  assert.equal(evaluarPrograma(p, afiliado({ viviendaNueva: true })).elegibilidad, 'apto');
-  assert.equal(evaluarPrograma(p, afiliado()).elegibilidad, 'apto');
+  assert.deepEqual(usada.razones, ['Solo financia vivienda nueva de primer uso.']);
+  const nueva = evaluarPrograma(p, afiliado({ viviendaNueva: true }));
+  assert.equal(nueva.elegibilidad, 'apto');
+  assert.deepEqual(nueva.razones, []);
+  const desconocida = evaluarPrograma(p, afiliado());
+  assert.ok(!('viviendaNueva' in afiliado()));
+  assert.equal(desconocida.elegibilidad, 'condicional');
+  assert.deepEqual(desconocida.razones, ['Solo financia vivienda nueva de primer uso: confirma que la vivienda lo es.']);
+  // Un producto que no exige vivienda nueva no pregunta.
+  assert.equal(evaluarPrograma(base(), holgado()).elegibilidad, 'apto');
+  assert.equal(evaluarPrograma(base({ soloViviendaNueva: false }), holgado({ viviendaNueva: false })).elegibilidad, 'apto');
 });
 
 // ---------- Tramos del BIESS ----------
@@ -123,6 +145,44 @@ test('los tramos tienen prioridad sobre financiamientoMaxPct', () => {
   assert.ok(Math.abs(evaluarPrograma(p, holgado({ precioVivienda: 150000 })).entradaRequerida - 45000) < 1e-6);
   // Sobre el último tramo se usa financiamientoMaxPct.
   assert.equal(evaluarPrograma(p, holgado({ precioVivienda: 300000 })).entradaRequerida, 150000);
+});
+
+// ---------- Plazo ----------
+
+test('plazo bajo el mínimo del producto: se usa el mínimo y queda condicional', () => {
+  const p = base({ plazoMinAnios: 5 });
+  const r = evaluarPrograma(p, holgado({ plazoDeseado: 1 }));
+  assert.equal(r.plazo, 5);
+  assert.equal(r.elegibilidad, 'condicional');
+  assert.deepEqual(r.razones, ['El plazo mínimo del producto es de 5 años; la cuota se calcula a 5 años.']);
+  assert.equal(r.cuotaEstimada, cuotaMensual({ monto: 80000, tasaNominalAnual: 4, plazoAnios: 5 }));
+  // En el mínimo exacto no hay observación.
+  const justo = evaluarPrograma(p, holgado({ plazoDeseado: 5 }));
+  assert.equal(justo.plazo, 5);
+  assert.equal(justo.elegibilidad, 'apto');
+  // Un producto real: CrediCasa (mínimo 5 años) con plazo deseado de 1 año.
+  const cc = evaluarPrograma(prog('biess-credicasa'), afiliado({ plazoDeseado: 1, viviendaNueva: true }));
+  assert.equal(cc.plazo, 5);
+  incluye(cc, 'El plazo mínimo del producto es de 5 años; la cuota se calcula a 5 años.');
+});
+
+test('plazo: primero el tope máximo, luego el mínimo y al final la edad', () => {
+  // Tope máximo: 30 años pedidos en un producto de 20 → 20, sin observación.
+  assert.equal(evaluarPrograma(base(), holgado({ plazoDeseado: 30 })).plazo, 20);
+  // Mínimo y luego edad: la edad no recorta si deja al menos el mínimo (75 − 68 = 7 ≥ 5).
+  const minYEdad = evaluarPrograma(base({ plazoMinAnios: 5 }), holgado({ plazoDeseado: 2, edad: 68 }));
+  assert.equal(minYEdad.plazo, 5);
+  assert.deepEqual(minYEdad.razones, ['El plazo mínimo del producto es de 5 años; la cuota se calcula a 5 años.']);
+  // Si la edad no permite ni el mínimo, bloquea.
+  const bloqueo = evaluarPrograma(base({ plazoMinAnios: 5 }), holgado({ plazoDeseado: 2, edad: 72 }));
+  assert.equal(bloqueo.elegibilidad, 'no_apto');
+  incluye(bloqueo, 'Por edad, el plazo disponible sería menor al mínimo');
+  // La edad puede recortar por debajo del deseado sin bajar del mínimo.
+  const edad = evaluarPrograma(base({ plazoMinAnios: 5 }), holgado({ plazoDeseado: 20, edad: 69 }));
+  assert.equal(edad.plazo, 6);
+  assert.deepEqual(edad.razones, ['Por tu edad el plazo máximo sería de 6 años.']);
+  // Sin plazo mínimo publicado no se fuerza ninguno.
+  assert.equal(evaluarPrograma(base({ plazoMinAnios: null }), holgado({ plazoDeseado: 1 })).plazo, 1);
 });
 
 // ---------- Edad ----------
@@ -211,7 +271,15 @@ test('monto máximo y monto mínimo del producto: condicional', () => {
   const tope = evaluarPrograma(base({ montoMaxUsd: 50000 }), holgado());
   assert.equal(tope.elegibilidad, 'condicional');
   assert.equal(tope.montoFinanciable, 50000);
-  incluye(tope, 'El monto máximo del producto es 50.000 USD');
+  assert.equal(tope.entradaRequerida, 50000);
+  assert.deepEqual(tope.razones, ['El monto máximo del producto es 50.000 USD: necesitas una entrada de al menos 50.000 USD.']);
+  const conEntrada = evaluarPrograma(base({ montoMaxUsd: 50000 }), holgado({ entradaDisponible: 50000 }));
+  assert.equal(conEntrada.elegibilidad, 'apto');
+  assert.equal(conEntrada.montoFinanciable, 50000);
+  // Si el % financiable es más restrictivo que el monto máximo, manda el mensaje del porcentaje.
+  const pct = evaluarPrograma(base({ montoMaxUsd: 90000 }), holgado({ entradaDisponible: 0 }));
+  assert.equal(pct.entradaRequerida, 20000);
+  assert.deepEqual(pct.razones, ['Necesitas una entrada mínima del 20 % (≈ 20.000 USD).']);
   const minimo = evaluarPrograma(base({ montoMinUsd: 10000 }), holgado({ precioVivienda: 50000, entradaDisponible: 45000 }));
   assert.equal(minimo.elegibilidad, 'condicional');
   assert.equal(minimo.montoFinanciable, 5000);

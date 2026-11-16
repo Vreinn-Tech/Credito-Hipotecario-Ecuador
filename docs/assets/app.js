@@ -60,6 +60,7 @@ async function iniciarDemo() {
       aportaciones: iess.checked ? num('aportaciones') ?? 0 : 0,
       edad: num('edad'),
       primeraVivienda: $('f-primera').checked,
+      viviendaNueva: $('f-nueva').checked,
       plazoDeseado: num('plazoDeseado'),
     };
   }

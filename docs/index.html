@@ -230,6 +230,7 @@
           <input id="f-aport" name="aportaciones" type="number" inputmode="numeric" min="0" step="1" value="48">
         </div>
         <label class="check"><input type="checkbox" id="f-primera" name="primeraVivienda" checked> <span>Sería mi primera vivienda</span></label>
+        <label class="check"><input type="checkbox" id="f-nueva" name="viviendaNueva" checked> <span>Vivienda nueva (primer uso)</span></label>
         <button class="btn btn-brand btn-block" type="submit">Calcular</button>
         <p class="nota">La demo asume compra de vivienda terminada y empleo en relación de dependencia. La evaluación completa del sitio pregunta además destino, provincia y situación laboral.</p>
       </form>
@@ -271,7 +272,7 @@
         <ul>
           <li>El producto no financia el destino que buscas (compra, construcción, terreno, remodelación o sustitución de hipoteca).</li>
           <li>Exige afiliación al IESS y no la tienes, o tienes menos aportaciones que el mínimo.</li>
-          <li>Es solo para primera vivienda, o solo para vivienda nueva, y no es tu caso.</li>
+          <li>Es solo para primera vivienda, o solo para vivienda nueva de primer uso y la tuya es usada.</li>
           <li>El precio de la vivienda está fuera del rango del programa (tope VIS/VIP o mínimo del segmento).</li>
           <li>Tus ingresos familiares superan el tope del programa.</li>
           <li>No llegas a la edad mínima, o por tu edad el plazo disponible sería menor al mínimo del producto.</li>
@@ -282,8 +283,10 @@
         <h3><span class="punto" aria-hidden="true"></span>Reglas que condicionan</h3>
         <p class="regla-sub">Sigues en carrera, pero con una observación que resolver.</p>
         <ul>
-          <li>Tu ahorro no cubre la entrada mínima: el motor te dice cuánto falta.</li>
-          <li>Necesitas más que el monto máximo del producto (cubrirías la diferencia) o menos que su monto mínimo.</li>
+          <li>Tu ahorro no cubre la entrada mínima, ya sea por el porcentaje que financia el producto o por su monto máximo: el motor te dice cuánta entrada necesitas.</li>
+          <li>Necesitas menos que el monto mínimo del producto.</li>
+          <li>El producto es solo para vivienda nueva y no has indicado si la tuya lo es.</li>
+          <li>Pides menos años que el plazo mínimo del producto: la cuota se calcula con ese mínimo.</li>
           <li>Por tu edad, el plazo se recorta para terminar de pagar antes de la edad máxima.</li>
           <li>La cuota supera el límite cuota/ingreso, pero por un 40 % o menos: se sugiere más entrada o más plazo.</li>
           <li>Eres independiente (deberás justificar ingresos) o vives en el exterior y el producto es público.</li>
@@ -713,7 +716,7 @@
       <article class="dev-b">
         <h3>Desde la terminal</h3>
         <p>Sin instalar nada, con <code>npx</code>:</p>
-        <pre data-copiar class="cmd"><code>npx github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48</code></pre>
+        <pre data-copiar class="cmd"><code>npx github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48 --nueva</code></pre>
       </article>
       <article class="dev-b">
         <h3>Estructura de los datos</h3>

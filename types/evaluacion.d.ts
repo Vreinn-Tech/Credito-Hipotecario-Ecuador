@@ -102,7 +102,7 @@ export interface PerfilUsuario {
   relacionLaboral: RelacionLaboral;
   /** Plazo deseado en años. */
   plazoDeseado: number;
-  /** true = nueva, false = usada, sin definir = no se sabe. */
+  /** true = nueva, false = usada, sin definir = no se sabe (los productos solo para vivienda nueva quedan «condicional»). */
   viviendaNueva?: boolean;
 }
 
@@ -118,9 +118,9 @@ export interface ResultadoPrograma {
   montoFinanciable: number;
   /** Cuota mensual estimada (solo capital e interés), USD. */
   cuotaEstimada: number;
-  /** Plazo aplicado en años (ajustado por el máximo del producto y la edad). */
+  /** Plazo aplicado en años (ajustado por el máximo y el mínimo del producto y por la edad). */
   plazo: number;
-  /** Entrada mínima que exige el producto para ese precio, USD. */
+  /** Entrada mínima para ese precio, USD: precio − min(precio × % financiable, montoMaxUsd). */
   entradaRequerida: number;
   /** Crédito máximo que soporta el ingreso disponible con la tasa y plazo del producto, USD. */
   capacidadMaxima: number;

@@ -1,6 +1,6 @@
 {
   "name": "credito-hipotecario-ecuador",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Librería, CLI y servidor MCP sin dependencias, con datos abiertos de crédito de vivienda en Ecuador (BIESS, VIS/VIP, bancos, cooperativas y mutualistas): motor de elegibilidad y cálculo de cuotas.",
   "keywords": [
     "ecuador",

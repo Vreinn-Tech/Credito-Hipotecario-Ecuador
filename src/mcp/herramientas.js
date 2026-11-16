@@ -269,7 +269,7 @@ export function crearHerramientas({ programas, entidades }) {
         primeraVivienda: { type: 'boolean', default: true, description: 'true si sería su primera y única vivienda. Por defecto true.' },
         relacionLaboral: { type: 'string', enum: RELACIONES_LABORALES, default: 'dependiente', description: 'Situación laboral: dependiente (empleado), independiente, jubilado o migrante (ecuatoriano en el exterior). Por defecto dependiente.' },
         plazoDeseado: { type: 'number', minimum: 1, maximum: 40, default: 20, description: 'Plazo deseado en años (cada producto lo limita a su máximo). Por defecto 20.' },
-        viviendaNueva: { type: 'boolean', description: 'true si la vivienda es nueva de primer uso; false si es usada. Omítelo si no se sabe (algunos programas solo financian vivienda nueva).' },
+        viviendaNueva: { type: 'boolean', description: 'true si la vivienda es nueva de primer uso; false si es usada. Omítelo si no se sabe: los productos que solo financian vivienda nueva quedarán «condicional» hasta confirmarlo, así que pregúntalo si la persona compra vivienda terminada.' },
         incluirNoAptos: { type: 'boolean', default: false, description: 'true para incluir también los productos a los que NO califica, con el motivo. Por defecto false.' },
         limite: { type: 'integer', minimum: 1, maximum: 50, default: 8, description: 'Máximo de productos a devolver. Por defecto 8.' },
       },

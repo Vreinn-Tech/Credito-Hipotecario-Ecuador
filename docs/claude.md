@@ -158,7 +158,7 @@ Si el servidor no aparece, revisa la sintaxis del JSON y los registros de Claude
 Si las herramientas no están disponibles, el mismo motor funciona desde la terminal:
 
 ```bash
-npx -y github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48
+npx -y github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48 --nueva
 ```
 
 ## Aviso

@@ -12,7 +12,7 @@
 import { crearHerramientas, ErrorDeHerramienta, NOTA, SITIO } from './herramientas.js';
 
 export const NOMBRE_SERVIDOR = 'credito-hipotecario-ecuador';
-export const VERSION_SERVIDOR = '0.1.0';
+export const VERSION_SERVIDOR = '0.1.1';
 export const VERSION_MODERNA = '2026-07-28';
 export const VERSIONES_CLASICAS = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 /** Versiones de protocolo admitidas, de la más nueva a la más antigua. */

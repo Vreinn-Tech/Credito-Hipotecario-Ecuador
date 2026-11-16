@@ -48,20 +48,20 @@ la fuente. Los errores de validación llegan como resultado con `isError: true` 
 Obligatorios: `precioVivienda` e `ingresoMensual`. Opcionales (con su valor por defecto): `entradaDisponible` (0),
 `deudasMensuales` (0), `afiliadoIess` (false), `aportaciones` (0), `edad` (35), `uso` (`vivienda_terminada`; también
 `construccion`, `terreno`, `remodelacion`, `sustitucion`, `vis_vip`), `primeraVivienda` (true), `relacionLaboral`
-(`dependiente`; también `independiente`, `jubilado`, `migrante`), `plazoDeseado` (20), `viviendaNueva` (sin valor),
+(`dependiente`; también `independiente`, `jubilado`, `migrante`), `plazoDeseado` (20), `viviendaNueva` (sin valor: los productos solo para vivienda nueva quedan «condicional»),
 `incluirNoAptos` (false) y `limite` (8).
 
 Entrada:
 
 ```json
-{ "precioVivienda": 70000, "ingresoMensual": 1200, "afiliadoIess": true, "aportaciones": 48, "limite": 1 }
+{ "precioVivienda": 70000, "ingresoMensual": 1200, "afiliadoIess": true, "aportaciones": 48, "viviendaNueva": true, "limite": 1 }
 ```
 
 Salida (`structuredContent`, abreviada: se omiten `perfil`, `aviso` y `fuente`):
 
 ```json
 {
-  "conteo": { "evaluados": 26, "aptos": 0, "condicionales": 18, "noAptos": 8, "devueltos": 1 },
+  "conteo": { "evaluados": 26, "aptos": 0, "condicionales": 19, "noAptos": 7, "devueltos": 1 },
   "resultados": [
     {
       "slug": "biess-credicasa",
@@ -71,11 +71,11 @@ Salida (`structuredContent`, abreviada: se omiten `perfil`, `aviso` y `fuente`):
       "categoria": "publico",
       "elegibilidad": "condicional",
       "score": 85,
-      "razones": ["El monto máximo del producto es 65.000 USD; deberías cubrir la diferencia."],
+      "razones": ["El monto máximo del producto es 65.000 USD: necesitas una entrada de al menos 5.000 USD."],
       "montoFinanciable": 65000,
       "cuotaEstimada": 360.16,
       "plazo": 20,
-      "entradaRequerida": 0,
+      "entradaRequerida": 5000,
       "capacidadMaxima": 86627.41,
       "tasaNominal": 2.99,
       "verificado": true,
@@ -92,8 +92,8 @@ El texto que acompaña dice lo mismo en lenguaje natural:
 ```text
 1. BIESS · CrediCasa 2,99 % — BIESS (Banco del IESS) [condicional, puntaje 85/100]
    Monto financiable: 65.000 USD · Cuota estimada: 360,16 USD/mes · Plazo: 20 años · Tasa nominal: 2,99 %
-   Entrada requerida: 0 USD · Monto máximo según ingresos: 86.627 USD
-   Observaciones: El monto máximo del producto es 65.000 USD; deberías cubrir la diferencia.
+   Entrada requerida: 5.000 USD · Monto máximo según ingresos: 86.627 USD
+   Observaciones: El monto máximo del producto es 65.000 USD: necesitas una entrada de al menos 5.000 USD.
 ```
 
 Los bonos y subsidios (categoría `subsidio`) no se evalúan: consúltalos con `listar_programas` y `detalle_programa`.

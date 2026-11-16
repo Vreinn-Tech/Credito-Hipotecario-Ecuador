@@ -33,8 +33,9 @@ El resto tiene valores por defecto conservadores que cambian mucho el resultado.
 - ¿Está afiliado al IESS y cuántas aportaciones tiene? (`afiliadoIess`, `aportaciones`; sin esto quedan fuera los créditos del BIESS)
 - ¿Cuánto tiene ahorrado para la entrada? (`entradaDisponible`, por defecto 0)
 - ¿Qué edad tiene? (`edad`, por defecto 35; limita el plazo)
+- Si compra vivienda terminada (o le interesan CrediCasa o Tu Casa Miti-Miti): ¿la vivienda es nueva de primer uso o usada? (`viviendaNueva: true` o `false`). Esos productos solo financian vivienda nueva: si no se sabe, salen «condicional» con la observación de confirmarlo; si es usada, «no apto».
 
-Pasa también lo que la persona ya haya dicho: `deudasMensuales`, `uso` (`vivienda_terminada`, `construccion`, `terreno`, `remodelacion`, `sustitucion`, `vis_vip`), `primeraVivienda`, `relacionLaboral` (`dependiente`, `independiente`, `jubilado`, `migrante`), `plazoDeseado` y `viviendaNueva`. No inventes datos: omite lo que no sepas y di qué valores se asumieron.
+Pasa también lo que la persona ya haya dicho: `deudasMensuales`, `uso` (`vivienda_terminada`, `construccion`, `terreno`, `remodelacion`, `sustitucion`, `vis_vip`), `primeraVivienda`, `relacionLaboral` (`dependiente`, `independiente`, `jubilado`, `migrante`), `plazoDeseado` y `viviendaNueva`. Si el plazo que pide es menor que el mínimo de un producto, la cuota de ese producto se calcula con el plazo mínimo y lo indica en las observaciones. No inventes datos: omite lo que no sepas y di qué valores se asumieron.
 
 Si la persona quiere una respuesta ya, evalúa con lo que haya y ofrece afinar. No pidas cédula, nombres ni otros datos que identifiquen a alguien: no hacen falta.
 
@@ -48,7 +49,7 @@ Si la persona quiere una respuesta ya, evalúa con lo que haya y ofrece afinar. 
 
    - Elegibilidad: apto, condicional o no apto. «Condicional» significa que califica si cumple lo que dicen las observaciones (`razones`); cópialas sin suavizarlas.
    - Fuente: enlaza `fuenteUrl` (oficial) o `url` (ficha) y pon `fechaDato`. Marca como «preliminar» los productos con `verificado: false`.
-3. Qué puede hacer para mejorar el resultado, según las observaciones: más entrada, más plazo o una vivienda de menor precio.
+3. Qué puede hacer para mejorar el resultado, según las observaciones: más entrada, más plazo o una vivienda de menor precio. Si una observación pide confirmar que la vivienda es nueva y no lo preguntaste, pregúntalo y vuelve a evaluar.
 4. Si no califica a nada, repite la llamada con `incluirNoAptos: true` y explica los motivos.
 
 La cuota incluye capital e interés; no incluye seguros de desgravamen e incendio ni gastos legales. Dilo al dar una cuota. Los bonos y subsidios no pasan por `evaluar_perfil`: consúltalos con `listar_programas` y `categoria: "subsidio"`.
@@ -67,7 +68,7 @@ Dilo y ofrece una de estas dos salidas:
 - Con terminal y Node.js 18 o superior, usa el CLI (añade `--json` para leer la salida):
 
   ```bash
-  npx -y github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48
+  npx -y github:Vreinn-Tech/Credito-Hipotecario-Ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48 --nueva
   npx -y github:Vreinn-Tech/Credito-Hipotecario-Ecuador cuota --monto 65000 --tasa 2.99 --plazo 20
   npx -y github:Vreinn-Tech/Credito-Hipotecario-Ecuador programas --categoria publico
   npx -y github:Vreinn-Tech/Credito-Hipotecario-Ecuador programa biess-credicasa

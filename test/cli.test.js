@@ -32,13 +32,31 @@ test('cli: --version', () => {
 });
 
 test('cli: evaluar muestra la tabla, las observaciones y el enlace final', () => {
-  const salida = ok('evaluar', '--precio', '65000', '--ingreso', '1200', '--iess', '--aportaciones', '48', '--plazo', '30');
+  const salida = ok('evaluar', '--precio', '65000', '--ingreso', '1200', '--iess', '--aportaciones', '48', '--plazo', '30', '--nueva');
   assert.ok(salida.includes('Perfil evaluado'));
+  assert.ok(salida.includes('· nueva'));
   assert.ok(salida.includes('IESS: afiliado, 48 aportaciones'));
   assert.match(salida, /^ ?1 {2}BIESS · CrediCasa 2,99 % .* Apto +100 +2,99 % +30 años +\$65\.000 +\$274 +\$0$/m);
   assert.ok(salida.includes('Observaciones'));
   assert.ok(!salida.includes('No apto'), 'sin --todos no se listan los no aptos');
   assert.ok(salida.trimEnd().endsWith(ENLACE));
+});
+
+test('cli: sin --nueva, CrediCasa queda condicional y pide confirmar que la vivienda es nueva', () => {
+  const salida = ok('evaluar', '--precio', '65000', '--ingreso', '1200', '--iess', '--aportaciones', '48', '--plazo', '30');
+  assert.match(salida, /^ ?1 {2}BIESS · CrediCasa 2,99 % .* Condicional +\d+ +2,99 % +30 años +\$65\.000 +\$274 +\$0$/m);
+  assert.ok(salida.includes('confirma que la vivienda lo es'));
+});
+
+test('cli: evaluar --json con precio sobre el monto máximo de CrediCasa exige la diferencia como entrada', () => {
+  const datos = JSON.parse(ok('evaluar', '--precio', '70000', '--ingreso', '1200', '--iess', '--aportaciones', '48', '--nueva', '--json'));
+  const cc = datos.resultados.find((r) => r.slug === 'biess-credicasa');
+  assert.equal(cc.elegibilidad, 'condicional');
+  assert.equal(cc.entradaRequerida, 5000);
+  assert.equal(cc.montoFinanciable, 65000);
+  assert.deepEqual(cc.razones, ['El monto máximo del producto es 65.000 USD: necesitas una entrada de al menos 5.000 USD.']);
+  const conEntrada = JSON.parse(ok('evaluar', '--precio', '70000', '--entrada', '5000', '--ingreso', '1200', '--iess', '--aportaciones', '48', '--nueva', '--json'));
+  assert.equal(conEntrada.resultados.find((r) => r.slug === 'biess-credicasa').elegibilidad, 'apto');
 });
 
 test('cli: evaluar --todos incluye los no aptos con su motivo', () => {

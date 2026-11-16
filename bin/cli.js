@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * CLI de credito-hipotecario-ecuador. Sin dependencias.
- *   credito-hipotecario-ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48
+ *   credito-hipotecario-ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48 --nueva
  *   credito-hipotecario-ecuador --help
  */
 import { parseArgs } from 'node:util';
@@ -60,7 +60,8 @@ Opciones de "evaluar":
   --plazo <años>         Plazo deseado (por defecto 20)
   --segunda-vivienda     Ya tienes una vivienda (por defecto se asume primera vivienda)
   --relacion <tipo>      ${RELACIONES_LABORALES.join(' | ')} (por defecto dependiente)
-  --nueva | --usada      La vivienda es nueva de primer uso o usada (por defecto: no se sabe)
+  --nueva | --usada      La vivienda es nueva de primer uso o usada (por defecto: no se sabe;
+                         los productos solo para vivienda nueva quedan condicionales)
   --todos                Incluye también los productos a los que no calificas
   --json                 Salida en JSON
 
@@ -87,7 +88,7 @@ Generales:
 Los montos se escriben sin separador de miles (70000, no 70.000).
 
 Ejemplos:
-  credito-hipotecario-ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48
+  credito-hipotecario-ecuador evaluar --precio 70000 --ingreso 1200 --entrada 5000 --iess --aportaciones 48 --nueva
   credito-hipotecario-ecuador evaluar --precio 120000 --entrada 30000 --ingreso 2500 --usada --todos
   credito-hipotecario-ecuador cuota --monto 65000 --tasa 2.99 --plazo 30
   credito-hipotecario-ecuador programas --categoria publico
