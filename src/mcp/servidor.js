@@ -162,6 +162,9 @@ export function crearServidorMcp({ programas, entidades, version = VERSION_SERVI
     }
   }
 
+  /** Tope de mensajes por lote: evita que una sola petición dispare cientos de cálculos. */
+  const MAX_LOTE = 10;
+
   /**
    * Procesa un mensaje (o un lote, solo en versiones que lo admiten: 2025-03-26 y anteriores) e indica la era con que se atendió.
    * @param {unknown} mensaje Mensaje JSON-RPC ya parseado.
@@ -175,6 +178,9 @@ export function crearServidorMcp({ programas, entidades, version = VERSION_SERVI
       if (mensaje.length === 0 || hayModerno || (v !== undefined && v >= '2025-06-18')) {
         const motivo = mensaje.length === 0 ? 'lote vacío' : 'los lotes JSON-RPC solo se admiten con las versiones de protocolo 2025-03-26 y 2024-11-05';
         return { respuesta: errorJsonRpc(null, CODIGOS.PETICION_INVALIDA, `Invalid Request: ${motivo}.`), moderno: false };
+      }
+      if (mensaje.length > MAX_LOTE) {
+        return { respuesta: errorJsonRpc(null, CODIGOS.PETICION_INVALIDA, `Invalid Request: un lote admite como máximo ${MAX_LOTE} mensajes.`), moderno: false };
       }
       const respuestas = mensaje.map((m) => uno(m, ctx).respuesta).filter((r) => r !== null);
       return { respuesta: respuestas.length ? respuestas : null, moderno: false };

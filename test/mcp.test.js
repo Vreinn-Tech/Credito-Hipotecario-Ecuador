@@ -414,3 +414,9 @@ test('las salidas estructuradas cumplen su outputSchema (campos requeridos y tip
   };
   for (const t of tools) validar(t.outputSchema, llamar(t.name, ejemplos[t.name]).structuredContent, t.name);
 });
+
+test('lotes: más de 10 mensajes se rechazan para no multiplicar el cálculo', () => {
+  const lote = Array.from({ length: 11 }, (_, i) => ({ jsonrpc: '2.0', id: i + 1, method: 'ping' }));
+  assert.equal(servidor.manejar(lote).error.code, -32600);
+  assert.equal(servidor.manejar(lote.slice(0, 10)).length, 10);
+});
